@@ -1,0 +1,32 @@
+kind: pipeline
+name: default
+
+steps:
+- name: install
+  image: node:18-alpine
+  commands:
+  - corepack pnpm@7.5.1 install
+
+- name: build
+  image: node:18-alpine
+  commands:
+  - corepack pnpm@7.5.1 build
+
+- name: deploy
+  image: plugins/docker
+  settings:
+    registry: registry.cliffbreak.de
+    repo: registry.cliffbreak.de/kispi-core
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+    - push
+    - tag
+    - promote
+
+trigger:
+  branch:
+  - master

@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "usernamehw.errorlens",
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker-german",
+    "jasonlhy.hungry-delete",
+    "gruntfuggly.todo-tree",
+    "Vue.volar"
+  ]
+}
