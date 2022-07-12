@@ -5,7 +5,7 @@
       type="checkbox"
       class="drawer-toggle"
     />
-    <div class="drawer-content flex flex-col lg:p-6 lg:pt-0 bg-base-200 h-screen">
+    <div class="drawer-content flex flex-col lg:p-6 bg-base-300 h-screen">
       <div
         class="navbar shadow-lg bg-neutral-focus text-neutral-content lg:hidden sticky top-0 z-50 max-w-7xl place-self-center"
       >
@@ -31,7 +31,7 @@
         :for="drawerId"
         class="drawer-overlay"
       />
-      <ul class="menu p-4 overflow-y-auto w-80">
+      <ul class="menu p-4 overflow-y-auto w-64">
         <li class="pointer-events-none">
           <a>
             <AtomLogo class="w-28" />
@@ -39,9 +39,10 @@
         </li>
         <li
           v-for="navigationEntry of navigationEntries"
-          :class="navigationEntry.name === 'divider' ? 'menu-title' : null"
+          :class="getNavigationEntryClass(navigationEntry)"
         >
-          <RouterLink
+          <component
+            :is="!navigationEntry.to || navigationEntry.disabled ? 'span' : 'router-link'"
             v-if="navigationEntry.name !== 'divider'"
             :to="navigationEntry.to"
             active-class="active"
@@ -50,7 +51,7 @@
               :is="navigationEntry.icon"
               class="h-6 w-6"
             />{{ navigationEntry.name }}
-          </RouterLink>
+          </component>
         </li>
         <AtomSwap
           class="mt-auto place-self-end"
@@ -82,6 +83,14 @@ defineProps({
     required: true,
   },
 });
+
+const getNavigationEntryClass = (navigationEntry: INavigationEntry) => {
+  return {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    'menu-title': navigationEntry.name === 'divider',
+    disabled: navigationEntry.disabled,
+  };
+};
 </script>
 
 <style lang="scss" scoped>

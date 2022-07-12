@@ -3,7 +3,7 @@
     :drawer-id="drawerId"
     :navigation-entries="navigationEntries"
   >
-    <router-view />
+    <RouterView />
   </MoleculeNavigationDrawer>
 </template>
 
@@ -40,6 +40,7 @@ const navigationEntries: INavigationEntry[] = [
     name: 'Börse',
     icon: TrendingUpIcon,
     to: '/stocks',
+    disabled: true,
   },
   {
     name: 'Radio',
@@ -48,7 +49,6 @@ const navigationEntries: INavigationEntry[] = [
   },
   {
     name: 'divider',
-    to: '',
   },
   {
     name: 'Abmelden',
