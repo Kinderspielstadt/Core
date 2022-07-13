@@ -1,5 +1,7 @@
 <template>
-  <MoleculeDataTable :data="data" />
+  <div class="lg:p-6">
+    <MoleculeDataTable :data="data" />
+  </div>
 </template>
 
 <script lang="ts" setup>

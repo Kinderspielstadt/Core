@@ -5,7 +5,7 @@
       type="checkbox"
       class="drawer-toggle"
     />
-    <div class="drawer-content flex flex-col lg:p-6 bg-base-300 h-screen">
+    <div class="drawer-content flex flex-col bg-base-300 h-screen">
       <div
         class="navbar shadow-lg bg-neutral-focus text-neutral-content lg:hidden sticky top-0 z-50 max-w-7xl place-self-center"
       >
