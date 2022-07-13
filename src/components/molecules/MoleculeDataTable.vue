@@ -10,7 +10,7 @@
         <tr v-for="entries in data">
           <td
             v-for="(entry, _, key) of entries"
-            :class="key >= 6 ? 'text-center': null"
+            :class="key >= 6 ? 'text-center' : null"
           >
             <span v-if="key < 6">{{ entry }}</span>
             <button
