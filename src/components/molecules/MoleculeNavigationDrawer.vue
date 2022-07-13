@@ -84,13 +84,13 @@ defineProps({
   },
 });
 
-const getNavigationEntryClass = (navigationEntry: INavigationEntry) => {
+function getNavigationEntryClass(navigationEntry: INavigationEntry) {
   return {
     // eslint-disable-next-line @typescript-eslint/naming-convention
     'menu-title': navigationEntry.name === 'divider',
     disabled: navigationEntry.disabled,
   };
-};
+}
 </script>
 
 <style lang="scss" scoped>
