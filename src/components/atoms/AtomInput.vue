@@ -3,7 +3,9 @@
     ref="input"
     :type="type"
     :placeholder="placeholder"
-    class="input input-bordered w-full max-w-xs"
+    :value="modelValue"
+    class="input input-bordered w-full"
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
   />
 </template>
 
@@ -17,7 +19,13 @@ defineProps({
     type: String,
     default: '',
   },
+  modelValue: {
+    type: String,
+    default: '',
+  },
 });
+
+defineEmits(['update:modelValue']);
 </script>
 
 <style lang="scss" scoped>
