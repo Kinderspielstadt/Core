@@ -66,72 +66,72 @@ import { onKeyStroke } from '@vueuse/core';
 const depositModalId = 'deposit-modal';
 const salaryModalId = 'salary-modal';
 const withdrawModalId = 'withdraw-modal';
-const balance = 13500;
+const balance = 135;
 const transactions: ITransaction[] = [
   {
     type: 'Kontoeröffnung',
     date: new Date(2022, 7, 12, 17, 30, 0),
-    amount: 500,
+    amount: 5,
   },
   {
     type: 'Bargeldeinzahlung',
     date: new Date(2022, 7, 12, 17, 30, 10),
-    amount: 10000,
+    amount: 100,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Gehalt',
     date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 5000,
+    amount: 50,
   },
   {
     type: 'Bargeldauszahlung',
     date: new Date(2022, 7, 15, 18, 26, 0),
-    amount: -2000,
+    amount: -20,
   },
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
