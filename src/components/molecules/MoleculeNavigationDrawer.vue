@@ -31,7 +31,7 @@
         :for="drawerId"
         class="drawer-overlay"
       />
-      <ul class="menu p-4 overflow-y-auto w-64">
+      <ul class="menu p-4 overflow-y-auto w-64 bg-base-100">
         <li class="pointer-events-none">
           <a>
             <AtomLogo class="w-28" />
