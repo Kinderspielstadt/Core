@@ -6,4 +6,5 @@ export interface IAccount {
   lastName: string;
   balance: number;
   transactions: ITransaction[];
+  lastCheckIn: number;
 }

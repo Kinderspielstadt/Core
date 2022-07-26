@@ -12,7 +12,7 @@
       :transactions="accountDetails.transactions"
     />
   </div>
-  <div class="fixed flex place-content-center lg:gap-32 gap-16 bg-base-100 bottom-0 lg:w-[calc(100%-16rem)] w-full p-5">
+  <div class="fixed flex place-content-center lg:gap-32 gap-16 bg-base-100 bottom-0 lg:w-[calc(100%-16rem)] p-5">
     <MoleculeInputModal
       :id="depositModalId"
       title="Einzahlung"
@@ -62,15 +62,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ITransaction } from '../../interfaces/transaction.interface';
-import { CurrencyService } from '../services/currency.service';
-import { CurrencyDollarIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/outline';
-import MoleculeTransactionTable from '../molecules/MoleculeTransactionTable.vue';
-import MoleculeInputModal from '../molecules/MoleculeInputModal.vue';
+import { onMounted, ref } from 'vue';
 import { onKeyStroke } from '@vueuse/core';
 import { BankService, TransactionType } from '../services/bank.service';
-import { onMounted, ref } from 'vue';
+import { CurrencyService } from '../services/currency.service';
 import { IAccount } from '../../interfaces/account.interface';
+import { ITransaction } from '../../interfaces/transaction.interface';
+import { CurrencyDollarIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/vue/outline';
+import MoleculeInputModal from '../molecules/MoleculeInputModal.vue';
+import MoleculeTransactionTable from '../molecules/MoleculeTransactionTable.vue';
 
 const DEMO_ACCOUNT_ID = '0000123456';
 
