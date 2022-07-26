@@ -49,7 +49,6 @@ import { CurrencyService } from '../services/currency.service';
 import { DateService } from '../services/date.service';
 import { CurrencyDollarIcon, DocumentTextIcon } from '@heroicons/vue/outline';
 
-
 defineProps({
   tableHeaders: {
     type: Array as PropType<{ title: string, key: string, type: TableHeaderType }[]>,

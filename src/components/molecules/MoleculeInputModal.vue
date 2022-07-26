@@ -34,10 +34,10 @@
 </template>
 
 <script lang="ts" setup>
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/outline';
-import AtomModal from '../atoms/AtomModal.vue';
-import AtomCurrencyInput from '../atoms/AtomCurrencyInput.vue';
 import { ref } from 'vue';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/outline';
+import AtomCurrencyInput from '../atoms/AtomCurrencyInput.vue';
+import AtomModal from '../atoms/AtomModal.vue';
 
 const input = ref();
 const abortButton = ref();

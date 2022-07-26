@@ -8,6 +8,7 @@
 </template>
 
 <script setup lang="ts">
+import { INavigationEntry } from './interfaces/navigation-entry.interface';
 import {
   IdentificationIcon,
   LibraryIcon,
@@ -16,7 +17,6 @@ import {
   TrendingUpIcon,
   UserIcon,
 } from '@heroicons/vue/outline';
-import { INavigationEntry } from './interfaces/navigation-entry.interface';
 import MoleculeNavigationDrawer from './components/molecules/MoleculeNavigationDrawer.vue';
 
 const drawerId = 'default-drawer';
@@ -59,4 +59,5 @@ const navigationEntries: INavigationEntry[] = [
 </script>
 
 <style lang="scss" scoped>
+
 </style>

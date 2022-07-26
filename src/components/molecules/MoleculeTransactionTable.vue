@@ -35,9 +35,9 @@
 
 <script lang="ts" setup>
 import { PropType } from 'vue';
-import { ITransaction } from '../../interfaces/transaction.interface';
 import { CurrencyService } from '../services/currency.service';
 import { DateService } from '../services/date.service';
+import { ITransaction } from '../../interfaces/transaction.interface';
 
 defineProps({
   transactions: {

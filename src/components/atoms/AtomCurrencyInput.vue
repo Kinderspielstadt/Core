@@ -12,7 +12,6 @@
 
 <script lang="ts" setup>
 import AtomInput from './AtomInput.vue';
-
 </script>
 
 <style lang="scss" scoped>

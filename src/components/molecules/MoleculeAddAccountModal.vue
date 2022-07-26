@@ -65,11 +65,11 @@
 </template>
 
 <script lang="ts" setup>
-import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/outline';
-import AtomModal from '../atoms/AtomModal.vue';
-import AtomInput from '../atoms/AtomInput.vue';
-import AtomSelect from '../atoms/AtomSelect.vue';
 import { ref } from 'vue';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/outline';
+import AtomInput from '../atoms/AtomInput.vue';
+import AtomModal from '../atoms/AtomModal.vue';
+import AtomSelect from '../atoms/AtomSelect.vue';
 
 const firstName = ref('');
 
