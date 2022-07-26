@@ -1,5 +1,5 @@
 export interface ITransaction {
-  type: string;
-  date: Date;
+  label: string;
   amount: number;
+  date: Date;
 }

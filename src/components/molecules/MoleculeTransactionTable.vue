@@ -11,7 +11,7 @@
         <td>
           <div class="flex items-center">
             <div>
-              <div class="font-bold">{{ transaction.type }}</div>
+              <div class="font-bold">{{ transaction.label }}</div>
               <div>{{ DateService.toString(transaction.date) }}</div>
             </div>
           </div>

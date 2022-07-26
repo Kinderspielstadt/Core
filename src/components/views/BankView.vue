@@ -1,15 +1,18 @@
 <template>
-  <div class="hero-content flex-col text-center lg:p-6 pt-0">
-    <h1 class="text-8xl mt-5">{{ CurrencyService.toString(balance) }}</h1>
-    <h3 class="text-5xl font-bold mt-10">Kontoinhaber: John Doe</h3>
-    <h4 class="text-4xl mb-10">Kontonummer: 0000123456</h4>
+  <div
+    v-if="accountDetails"
+    class="hero-content flex-col text-center lg:p-6 pt-0"
+  >
+    <h1 class="text-8xl mt-5">{{ CurrencyService.toString(accountDetails.balance) }}</h1>
+    <h3 class="text-5xl font-bold mt-10">Kontoinhaber: {{ `${accountDetails.firstName} ${accountDetails.lastName}` }}</h3>
+    <h4 class="text-4xl mb-10">Kontonummer: {{ accountDetails.accountNumber }}</h4>
     <MoleculeTransactionTable
-      class="w-[42rem]"
-      :balance="balance"
-      :transactions="transactions"
+      class="w-[42rem] mb-24"
+      :balance="accountDetails.balance"
+      :transactions="accountDetails.transactions"
     />
   </div>
-  <div class="sticky flex place-content-center lg:gap-32 gap-16 bg-base-100 bottom-0 w-100 p-5">
+  <div class="fixed flex place-content-center lg:gap-32 gap-16 bg-base-100 bottom-0 lg:w-[calc(100%-16rem)] w-full p-5">
     <MoleculeInputModal
       :id="depositModalId"
       title="Einzahlung"
@@ -18,6 +21,7 @@
       @submit="handleDeposit"
     />
     <label
+      ref="depositModalLabel"
       class="btn gap-2"
       :for="depositModalId"
     >
@@ -32,6 +36,7 @@
       @submit="handleSalary"
     />
     <label
+      ref="salaryModalLabel"
       class="btn gap-2"
       :for="salaryModalId"
     >
@@ -46,6 +51,7 @@
       @submit="handleWithdraw"
     />
     <label
+      ref="withdrawModalLabel"
       class="btn gap-2"
       :for="withdrawModalId"
     >
@@ -62,97 +68,67 @@ import { CurrencyDollarIcon, ChevronDownIcon, ChevronUpIcon } from '@heroicons/v
 import MoleculeTransactionTable from '../molecules/MoleculeTransactionTable.vue';
 import MoleculeInputModal from '../molecules/MoleculeInputModal.vue';
 import { onKeyStroke } from '@vueuse/core';
+import { BankService, TransactionType } from '../services/bank.service';
+import { onMounted, ref } from 'vue';
+import { IAccount } from '../../interfaces/account.interface';
+
+const DEMO_ACCOUNT_ID = '0000123456';
+
+const accountDetails = ref<IAccount>();
+const depositModalLabel = ref<HTMLLabelElement>();
+const salaryModalLabel = ref<HTMLLabelElement>();
+const withdrawModalLabel = ref<HTMLLabelElement>();
+
+onMounted(async () => {
+  // TODO: Remove this demo account id
+  accountDetails.value = await BankService.getAccountDetails(DEMO_ACCOUNT_ID);
+});
 
 const depositModalId = 'deposit-modal';
 const salaryModalId = 'salary-modal';
 const withdrawModalId = 'withdraw-modal';
-const balance = 135;
-const transactions: ITransaction[] = [
-  {
-    type: 'Kontoeröffnung',
-    date: new Date(2022, 7, 12, 17, 30, 0),
-    amount: 5,
-  },
-  {
-    type: 'Bargeldeinzahlung',
-    date: new Date(2022, 7, 12, 17, 30, 10),
-    amount: 100,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Gehalt',
-    date: new Date(2022, 7, 12, 17, 34, 10),
-    amount: 50,
-  },
-  {
-    type: 'Bargeldauszahlung',
-    date: new Date(2022, 7, 15, 18, 26, 0),
-    amount: -20,
-  },
-].sort((a, b) => b.date.getTime() - a.date.getTime());
 
-
-
-onKeyStroke('e', (e) => {
+onKeyStroke(['e', 'g', 'a'], (e) => {
   e.preventDefault();
-  console.log('e pressed');
-  // TODO: open deposit modal
+  switch (e.key) {
+  case 'e':
+    depositModalLabel.value?.click();
+    break;
+  case 'g':
+    salaryModalLabel.value?.click();
+    break;
+  case 'a':
+    withdrawModalLabel.value?.click();
+    break;
+  }
 });
 
-function handleDeposit(amount: number) {
-  console.log('Deposit:', amount);
+async function handleDeposit(amount: string) {
+  const amountNumber = parseInt(amount);
+  if(!isNaN(amountNumber)) {
+    updateTransactions(await BankService.addTransaction(DEMO_ACCOUNT_ID, amountNumber, TransactionType.DEPOSIT));
+  }
 }
 
-function handleSalary(amount: number) {
-  console.log('Salary:', amount);
+async function handleSalary(amount: string) {
+  const amountNumber = parseInt(amount);
+  if(!isNaN(amountNumber)) {
+    updateTransactions(await BankService.addTransaction(DEMO_ACCOUNT_ID, amountNumber, TransactionType.SALARY));
+  }
 }
 
-function handleWithdraw(amount: number) {
-  console.log('Withdraw:', amount);
+async function handleWithdraw(amount: string) {
+  const amountNumber = parseInt(amount);
+  if(!isNaN(amountNumber)) {
+    updateTransactions(await BankService.addTransaction(DEMO_ACCOUNT_ID, amountNumber, TransactionType.WITHDRAW));
+  }
+}
+
+function updateTransactions(transaction: ITransaction) {
+  if(accountDetails.value) {
+    accountDetails.value.balance += transaction.amount;
+    accountDetails.value.transactions.unshift(transaction);
+  }
 }
 </script>
 
