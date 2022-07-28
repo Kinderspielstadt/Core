@@ -131,10 +131,11 @@ onKeyStroke(['e', 'g', 'a'], (e) => {
   }
 });
 
-onKeyStroke(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Enter'], async (e) => {
+onKeyStroke(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Enter'], (e) => {
   if(depositModalOpen.value || salaryModalOpen.value || withdrawModalOpen.value) {
     return;
   }
+  accountNotFound.value = false;
   e.preventDefault();
   if(e.key === 'Enter') {
     accountId.value = inputBuffer.value;

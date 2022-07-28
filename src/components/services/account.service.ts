@@ -39,6 +39,16 @@ export const AccountService = {
     } while(accountDocuments.total > offset);
     return accounts;
   },
+  async checkIn(accountNumber: string): Promise<IAccount> {
+    const account = await this.getAccount(accountNumber);
+    if(!account) {
+      throw new Error('Account not found');
+    }
+    const accountDocument = await database.updateDocument<IAccount & Models.Document>(ACCOUNTS_COLLECTION_ID, account.$id, {
+      lastCheckIn: Math.floor(+new Date() / 1000),
+    });
+    return accountDocument;
+  },
   async addAccount(account: IAccount): Promise<IAccount> {
     const accountDocument = await database.createDocument<IAccount & Models.Document>(ACCOUNTS_COLLECTION_ID, 'unique()', account);
     return accountDocument;
