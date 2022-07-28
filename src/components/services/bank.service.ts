@@ -16,6 +16,9 @@ export const BankService = {
   async getAccountDetails(accountNumber: string): Promise<IAccount> {
     const database = new Databases(sdk, DATABASE_ID);
     const account = await AccountService.getAccount(accountNumber);
+    if(!account) {
+      throw new Error('Account not found');
+    }
     const transactionDocuments = await database.listDocuments<ITransaction & Models.Document>(
       TRANSACTIONS_COLLECTION_ID, [Query.equal('accountNumber', accountNumber)], 100, 0, undefined, undefined, ['$createdAt'], ['DESC']);
     return {

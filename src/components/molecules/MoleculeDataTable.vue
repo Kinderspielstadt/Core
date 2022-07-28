@@ -32,12 +32,13 @@
             >
               <DocumentTextIcon class="h-6 w-6" />
             </label>
-            <button
+            <RouterLink
               v-if="header.type === TableHeaderType.BUTTON_ACCOUNT"
+              :to="`/bank?accountNumber=${entry.accountNumber}`"
               class="btn btn-sm btn-ghost p-1"
             >
               <CurrencyDollarIcon class="h-6 w-6" />
-            </button>
+            </RouterLink>
           </td>
         </tr>
       </tbody>
