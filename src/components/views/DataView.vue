@@ -4,8 +4,18 @@
       v-if="data"
       :table-headers="tableHeaders"
       :data="data"
+      :contact-modal-id="contactModalId"
+      @open-contact-modal="openContactModal"
     />
-    <MoleculeAddAccountModal :id="addAccountModalId" />
+    <MoleculeContactModal
+      :id="contactModalId"
+      :name="contactName"
+      :contact="contact"
+    />
+    <MoleculeAddAccountModal
+      :id="addAccountModalId"
+      @submit="addAccount"
+    />
     <label
       class="btn btn-primary btn-lg btn-circle shadow-2xl fixed bottom-8 right-8"
       :for="addAccountModalId"
@@ -18,11 +28,16 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 import { DataService } from '../services/data.service';
+import { IAccountData } from '../../interfaces/account-data.interface';
 import { PlusIcon } from '@heroicons/vue/outline';
 import MoleculeAddAccountModal from '../molecules/MoleculeAddAccountModal.vue';
+import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
 import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
 
-const data = ref();
+const data = ref<IAccountData[]>([]);
+const contactName = ref('');
+const contact = ref<string[]>([]);
+const contactModalId = 'contact-modal';
 const addAccountModalId = 'add-account-modal';
 const tableHeaders = [
   {
@@ -38,7 +53,7 @@ const tableHeaders = [
   {
     title: 'Geburtsdatum',
     key: 'birthday',
-    type: TableHeaderType.DATE,
+    type: TableHeaderType.STRING,
   },
   {
     title: 'Kontostand',
@@ -70,8 +85,16 @@ const tableHeaders = [
 onMounted(async () => {
   data.value = await DataService.getAllData();
 });
+
+function openContactModal(data: { name: string, contact: string[] }) {
+  contactName.value = data.name;
+  contact.value = data.contact;
+}
+
+function addAccount(account: IAccountData) {
+  data.value.push(account);
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>

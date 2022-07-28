@@ -39,4 +39,8 @@ export const AccountService = {
     } while(accountDocuments.total > offset);
     return accounts;
   },
+  async addAccount(account: IAccount): Promise<IAccount> {
+    const accountDocument = await database.createDocument<IAccount & Models.Document>(ACCOUNTS_COLLECTION_ID, 'unique()', account);
+    return accountDocument;
+  },
 };

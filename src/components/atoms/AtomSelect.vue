@@ -1,5 +1,8 @@
 <template>
-  <select class="select select-bordered w-full">
+  <select
+    class="select select-bordered w-full"
+    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
+  >
     <option
       disabled
       selected
@@ -22,7 +25,13 @@ defineProps({
     type: Array as PropType<string[]>,
     required: true,
   },
+  modelValue: {
+    type: String,
+    default: '',
+  },
 });
+
+defineEmits(['update:modelValue']);
 </script>
 
 <style lang="scss" scoped>

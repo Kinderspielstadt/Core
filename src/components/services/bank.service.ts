@@ -9,6 +9,7 @@ const TRANSACTIONS_COLLECTION_ID = '62dfd81b7671727b27cd';
 const DEPOSIT_LABEL = 'Bargeldeinzahlung';
 const SALARY_LABEL = 'Gehalt';
 const WITHDRAW_LABEL = 'Bargeldauszahlung';
+const OPEN_ACCOUNT_LABEL = 'Kontoeröffnung';
 const sdk = AppwriteService.getSDK();
 
 export const BankService = {
@@ -32,9 +33,24 @@ export const BankService = {
   },
   async addTransaction(accountNumber: string, amount: number, type: TransactionType): Promise<ITransaction> {
     const database = new Databases(sdk, DATABASE_ID);
+    let label = '';
+    switch (type) {
+    case TransactionType.DEPOSIT:
+      label = DEPOSIT_LABEL;
+      break;
+    case TransactionType.SALARY:
+      label = SALARY_LABEL;
+      break;
+    case TransactionType.WITHDRAW:
+      label = WITHDRAW_LABEL;
+      break;
+    case TransactionType.OPEN_ACCOUNT:
+      label = OPEN_ACCOUNT_LABEL;
+      break;
+    }
     const transactionDocument = await database.createDocument<ITransaction & Models.Document>(TRANSACTIONS_COLLECTION_ID, 'unique()', {
       accountNumber: accountNumber,
-      label: type === TransactionType.DEPOSIT ? DEPOSIT_LABEL : (type === TransactionType.SALARY ? SALARY_LABEL : WITHDRAW_LABEL),
+      label,
       amount: (type === TransactionType.WITHDRAW ? -amount : amount),
     });
     await AccountService.updateBalance(accountNumber, type === TransactionType.WITHDRAW ? -amount : amount);
@@ -46,4 +62,5 @@ export enum TransactionType {
   DEPOSIT,
   SALARY,
   WITHDRAW,
+  OPEN_ACCOUNT,
 }

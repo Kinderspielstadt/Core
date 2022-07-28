@@ -24,12 +24,14 @@
             <span v-else-if="header.type === TableHeaderType.CURRENCY">
               {{ CurrencyService.toString(entry[header.key]) }}
             </span>
-            <button
+            <label
               v-if="header.type === TableHeaderType.BUTTON_CONTACT"
+              :for="contactModalId"
               class="btn btn-sm btn-ghost p-1"
+              @click="$emit('open-contact-modal', { name: entry.name, contact: entry.contact })"
             >
               <DocumentTextIcon class="h-6 w-6" />
-            </button>
+            </label>
             <button
               v-if="header.type === TableHeaderType.BUTTON_ACCOUNT"
               class="btn btn-sm btn-ghost p-1"
@@ -60,7 +62,13 @@ defineProps({
     type: Array as PropType<any[]>,
     required: true,
   },
+  contactModalId: {
+    type: String,
+    required: true,
+  },
 });
+
+defineEmits(['open-contact-modal']);
 </script>
 
 <script lang="ts">
