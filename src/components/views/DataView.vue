@@ -145,7 +145,7 @@ function filterEvent(event: Event) {
     return;
   }
   data.value = data.value.filter((account: IAccountData) => {
-    return `${account.firstName} ${account.lastName}`.toLocaleLowerCase().includes(input);
+    return `${account.firstName} ${account.lastName}`.toLocaleLowerCase().includes(input.toLocaleLowerCase());
   });
 }
 </script>
