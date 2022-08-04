@@ -72,6 +72,9 @@ function handleOpen(event: {id: string, open: boolean}) {
 }
 
 function handleSubmit() {
+  if(input.value.$refs.input.$refs.input.value <= 0 || input.value.$refs.input.$refs.input.value > 100) {
+    return;
+  }
   emit('submit', input.value.$refs.input.$refs.input.value);
   abortButton.value.click();
 }
