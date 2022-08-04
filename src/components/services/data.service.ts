@@ -65,4 +65,9 @@ export const DataService = {
     accountDocument.balance = OPEN_ACCOUNT_BALANCE;
     return accountDocument;
   },
+  async migrateAccount(oldAccountNumber: string, newAccountNumber: string): Promise<boolean> {
+    await AccountService.migrateAccount(oldAccountNumber, newAccountNumber);
+    await BankService.migrateTransactions(oldAccountNumber, newAccountNumber);
+    return true;
+  },
 };

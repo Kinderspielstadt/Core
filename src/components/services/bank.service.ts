@@ -11,10 +11,10 @@ const SALARY_LABEL = 'Gehalt';
 const WITHDRAW_LABEL = 'Bargeldauszahlung';
 const OPEN_ACCOUNT_LABEL = 'Kontoeröffnung';
 const sdk = AppwriteService.getSDK();
+const database = new Databases(sdk, DATABASE_ID);
 
 export const BankService = {
   async getAccountDetails(accountNumber: string): Promise<IAccount> {
-    const database = new Databases(sdk, DATABASE_ID);
     const account = await AccountService.getAccount(accountNumber);
     if(!account) {
       throw new Error('Account not found');
@@ -35,7 +35,6 @@ export const BankService = {
     };
   },
   async addTransaction(accountNumber: string, amount: number, type: TransactionType): Promise<ITransaction> {
-    const database = new Databases(sdk, DATABASE_ID);
     let label = '';
     switch (type) {
     case TransactionType.DEPOSIT:
@@ -58,6 +57,16 @@ export const BankService = {
     });
     await AccountService.updateBalance(accountNumber, type === TransactionType.WITHDRAW ? -amount : amount);
     return { label: transactionDocument.label, amount: transactionDocument.amount, date: new Date(transactionDocument.$createdAt * 1000) };
+  },
+  async migrateTransactions(oldAccountNumber: string, newAccountNumber: string): Promise<boolean> {
+    const transactionDocuments = await database.listDocuments<ITransaction & Models.Document>(
+      TRANSACTIONS_COLLECTION_ID, [Query.equal('accountNumber', oldAccountNumber)], 100, 0, undefined, undefined, ['$createdAt'], ['DESC']);
+    transactionDocuments.documents.forEach(async transaction => {
+      await database.updateDocument(TRANSACTIONS_COLLECTION_ID, transaction.$id, {
+        accountNumber: newAccountNumber,
+      });
+    });
+    return true;
   },
 };
 

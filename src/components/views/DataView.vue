@@ -27,10 +27,19 @@
       :name="contactName"
       :contact="contact"
     />
+    <MoleculeMigrateAccountModal
+      :id="migrateAccountModalId"
+    />
     <MoleculeAddAccountModal
       :id="addAccountModalId"
       @submit="addAccount"
     />
+    <label
+      class="btn btn-primary btn-lg btn-circle shadow-2xl fixed bottom-8 right-28"
+      :for="migrateAccountModalId"
+    >
+      <SupportIcon class="w-7 h-7" />
+    </label>
     <label
       class="btn btn-primary btn-lg btn-circle shadow-2xl fixed bottom-8 right-8"
       :for="addAccountModalId"
@@ -44,11 +53,12 @@
 import { onMounted, ref } from 'vue';
 import { DataService } from '../services/data.service';
 import { IAccountData } from '../../interfaces/account-data.interface';
-import { PlusIcon } from '@heroicons/vue/outline';
+import { PlusIcon, SupportIcon } from '@heroicons/vue/outline';
 import MoleculeAddAccountModal from '../molecules/MoleculeAddAccountModal.vue';
 import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
 import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
 import AtomInput from '../atoms/AtomInput.vue';
+import MoleculeMigrateAccountModal from '../molecules/MoleculeMigrateAccountModal.vue';
 
 const ACCESS_PIN_KEY = '1337';
 const pinCorrect = ref(false);
@@ -57,6 +67,7 @@ const contactName = ref('');
 const contact = ref<string[]>([]);
 const contactModalId = 'contact-modal';
 const addAccountModalId = 'add-account-modal';
+const migrateAccountModalId = 'migrate-account-modal';
 const tableHeaders = [
   {
     title: 'Kontonummer',

@@ -53,4 +53,14 @@ export const AccountService = {
     const accountDocument = await database.createDocument<IAccount & Models.Document>(ACCOUNTS_COLLECTION_ID, 'unique()', account);
     return accountDocument;
   },
+  async migrateAccount(oldAccountNumber: string, newAccountNumber: string): Promise<IAccount> {
+    const account = await this.getAccount(oldAccountNumber);
+    if(!account) {
+      throw new Error('Account not found');
+    }
+    await database.updateDocument<IAccount & Models.Document>(ACCOUNTS_COLLECTION_ID, account.$id, {
+      accountNumber: newAccountNumber,
+    });
+    return account;
+  },
 };
