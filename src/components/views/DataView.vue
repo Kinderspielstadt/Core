@@ -15,6 +15,11 @@
     v-show="pinCorrect"
     class="lg:p-6"
   >
+    <AtomInput
+      placeholder="Nach Vor-/Nachname suchen"
+      class="mb-4"
+      @input="filterEvent"
+    />
     <MoleculeDataTable
       v-if="data"
       :table-headers="tableHeaders"
@@ -61,8 +66,9 @@ import AtomInput from '../atoms/AtomInput.vue';
 import MoleculeMigrateAccountModal from '../molecules/MoleculeMigrateAccountModal.vue';
 
 const ACCESS_PIN_KEY = '1337';
-const pinCorrect = ref(false);
+const pinCorrect = ref(true);
 const data = ref<IAccountData[]>([]);
+const initialData = ref<IAccountData[]>([]);
 const contactName = ref('');
 const contact = ref<string[]>([]);
 const contactModalId = 'contact-modal';
@@ -113,6 +119,7 @@ const tableHeaders = [
 
 onMounted(async () => {
   data.value = await DataService.getAllData();
+  initialData.value = data.value;
 });
 
 function openContactModal(data: { name: string, contact: string[] }) {
@@ -122,12 +129,24 @@ function openContactModal(data: { name: string, contact: string[] }) {
 
 function addAccount(account: IAccountData) {
   data.value.push(account);
+  initialData.value = data.value;
 }
 
 function inputEvent(event: Event) {
   if((event.target as HTMLInputElement).value == ACCESS_PIN_KEY) {
     pinCorrect.value = true;
   }
+}
+
+function filterEvent(event: Event) {
+  const input = (event.target as HTMLInputElement).value;
+  data.value = initialData.value;
+  if(input === '') {
+    return;
+  }
+  data.value = data.value.filter((account: IAccountData) => {
+    return `${account.firstName} ${account.lastName}`.toLocaleLowerCase().includes(input);
+  });
 }
 </script>
 
