@@ -25,7 +25,6 @@ const navigationEntries: INavigationEntry[] = [
     name: 'Stammdaten',
     icon: UserIcon,
     to: '/data',
-    disabled: true,
   },
   {
     name: 'Einstempeln',

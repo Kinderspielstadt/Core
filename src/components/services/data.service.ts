@@ -16,23 +16,26 @@ const database = new Databases(sdk, DATABASE_ID);
 export const DataService = {
   async getAllData(): Promise<IAccountData[]> {
     const accounts = (await AccountService.getAllAccounts()) as IAccountData[];
-    let offset = 0,
-      personalInformationDocuments: Models.DocumentList<IPersonalInformation & Models.Document>;
-    do {
-      personalInformationDocuments = await database.listDocuments<IPersonalInformation & Models.Document>(
-        PERSONAL_INFORMATION_COLLECTION_ID, [], 100, offset);
-      personalInformationDocuments.documents.forEach(personalInformation => {
-        const account = accounts.find(account => account.accountNumber === personalInformation.accountNumber);
-        if(account) {
-          account.name = `${account.firstName} ${account.lastName}`;
-          account.birthday = personalInformation.birthday;
-          account.address = personalInformation.address;
-          account.contact = personalInformation.contact;
-        }
-      },
-      );
-      offset += 100;
-    } while(personalInformationDocuments.total > offset);
+    accounts.forEach(account => {
+      account.name = `${account.firstName} ${account.lastName}`;
+    });
+    // let offset = 0,
+    //   personalInformationDocuments: Models.DocumentList<IPersonalInformation & Models.Document>;
+    // do {
+    //   personalInformationDocuments = await database.listDocuments<IPersonalInformation & Models.Document>(
+    //     PERSONAL_INFORMATION_COLLECTION_ID, [], 100, offset);
+    //   personalInformationDocuments.documents.forEach(personalInformation => {
+    //     const account = accounts.find(account => account.accountNumber === personalInformation.accountNumber);
+    //     if(account) {
+    //       account.name = `${account.firstName} ${account.lastName}`;
+    //       account.birthday = personalInformation.birthday;
+    //       account.address = personalInformation.address;
+    //       account.contact = personalInformation.contact;
+    //     }
+    //   },
+    //   );
+    //   offset += 100;
+    // } while(personalInformationDocuments.total > offset);
     return accounts;
   },
   async addAccount(account: ICreateAccount): Promise<IAccountData> {

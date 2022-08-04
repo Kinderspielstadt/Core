@@ -1,5 +1,20 @@
 <template>
-  <div class="lg:p-6">
+  <div
+    v-show="!pinCorrect"
+    class="hero min-h-full"
+  >
+    <div class="hero-content flex-col text-center">
+      <AtomInput
+        placeholder="Bitte PIN eingeben"
+        type="password"
+        @input="inputEvent"
+      />
+    </div>
+  </div>
+  <div
+    v-show="pinCorrect"
+    class="lg:p-6"
+  >
     <MoleculeDataTable
       v-if="data"
       :table-headers="tableHeaders"
@@ -33,7 +48,10 @@ import { PlusIcon } from '@heroicons/vue/outline';
 import MoleculeAddAccountModal from '../molecules/MoleculeAddAccountModal.vue';
 import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
 import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
+import AtomInput from '../atoms/AtomInput.vue';
 
+const ACCESS_PIN_KEY = '1337';
+const pinCorrect = ref(false);
 const data = ref<IAccountData[]>([]);
 const contactName = ref('');
 const contact = ref<string[]>([]);
@@ -50,31 +68,31 @@ const tableHeaders = [
     key: 'name',
     type: TableHeaderType.STRING,
   },
-  {
-    title: 'Geburtsdatum',
-    key: 'birthday',
-    type: TableHeaderType.STRING,
-  },
+  // {
+  //   title: 'Geburtsdatum',
+  //   key: 'birthday',
+  //   type: TableHeaderType.STRING,
+  // },
   {
     title: 'Kontostand',
     key: 'balance',
     type: TableHeaderType.CURRENCY,
   },
-  {
-    title: 'Adresse',
-    key: 'address',
-    type: TableHeaderType.STRING,
-  },
+  // {
+  //   title: 'Adresse',
+  //   key: 'address',
+  //   type: TableHeaderType.STRING,
+  // },
   {
     title: 'Letzter Login',
     key: 'lastCheckIn',
     type: TableHeaderType.DATETIME,
   },
-  {
-    title: 'Kontakt',
-    key: '',
-    type: TableHeaderType.BUTTON_CONTACT,
-  },
+  // {
+  //   title: 'Kontakt',
+  //   key: '',
+  //   type: TableHeaderType.BUTTON_CONTACT,
+  // },
   {
     title: 'Trans.',
     key: '',
@@ -93,6 +111,12 @@ function openContactModal(data: { name: string, contact: string[] }) {
 
 function addAccount(account: IAccountData) {
   data.value.push(account);
+}
+
+function inputEvent(event: Event) {
+  if((event.target as HTMLInputElement).value == ACCESS_PIN_KEY) {
+    pinCorrect.value = true;
+  }
 }
 </script>
 
