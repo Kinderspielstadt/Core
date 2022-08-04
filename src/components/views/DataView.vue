@@ -66,7 +66,7 @@ import AtomInput from '../atoms/AtomInput.vue';
 import MoleculeMigrateAccountModal from '../molecules/MoleculeMigrateAccountModal.vue';
 
 const ACCESS_PIN_KEY = '1337';
-const pinCorrect = ref(true);
+const pinCorrect = ref(false);
 const data = ref<IAccountData[]>([]);
 const initialData = ref<IAccountData[]>([]);
 const contactName = ref('');
