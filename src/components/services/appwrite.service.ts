@@ -3,7 +3,7 @@ import { Client, Account } from 'appwrite';
 const sdk = new Client();
 
 sdk
-  .setEndpoint('http://192.168.1.104/v1')
+  .setEndpoint('http://192.168.1.115/v1')
   .setProject('62dfc94a1637dc23acbc');
 
 export const AppwriteService = {
