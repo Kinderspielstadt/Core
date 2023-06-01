@@ -1,0 +1,303 @@
+[
+  {
+    "id": "w85pgrtrmovf916",
+    "name": "transactions",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "5aeh5giq",
+        "name": "account",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "options": {
+          "collectionId": "74ftooxenpeq14b",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": [
+            "firstName",
+            "lastName"
+          ]
+        }
+      },
+      {
+        "id": "2bzqyeuk",
+        "name": "label",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "zsx9i8w7",
+        "name": "amount",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "p0gixtx6jwria0d",
+    "name": "accountsData",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "6ubgbgeq",
+        "name": "birthday",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "r8rs5y2b",
+        "name": "email",
+        "type": "email",
+        "system": false,
+        "required": true,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "id": "uu9474bx",
+        "name": "firstNameParent",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "xmqazgjl",
+        "name": "lastNameParent",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "atylx3pk",
+        "name": "street",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "1ocem7g7",
+        "name": "zipCode",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "73do7uq3",
+        "name": "city",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "ktjkhpmz",
+        "name": "phone",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "74ftooxenpeq14b",
+    "name": "accounts",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "as1gvc1r",
+        "name": "accountNumber",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "vxeq20lk",
+        "name": "firstName",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "bsinpdk7",
+        "name": "lastName",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "syfivtki",
+        "name": "lastCheckIn",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "pkoynx7h",
+        "name": "personalData",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "p0gixtx6jwria0d",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": [
+            "firstNameParent",
+            "lastNameParent",
+            "email"
+          ]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_mPdvrAQ` ON `accounts` (`accountNumber`)"
+    ],
+    "listRule": "",
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": "@request.data.id = null && @request.data.accountNumber = null && @request.data.firstName = null && @request.data.lastName = null && @request.data.created = null && @request.data.updated = null",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "c3zz98wpbn7m6zw",
+    "name": "accountsList",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "id": "gw7zo5sb",
+        "name": "accountNumber",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "44jwqwg4",
+        "name": "name",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "dwqo9wuf",
+        "name": "lastCheckIn",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "etoowqoa",
+        "name": "balance",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  (a.firstName || ' ' || a.lastName) AS name,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nGROUP BY\n  a.id"
+    }
+  }
+]

@@ -2,15 +2,23 @@ kind: pipeline
 name: default
 
 steps:
-- name: install
-  image: node:18-alpine
+- name: install-webapp
+  image: node:lts-alpine
   commands:
-  - corepack pnpm@7.5.1 install
+  - cd webapp
+  - corepack pnpm@8.6.0 install
 
-- name: build
-  image: node:18-alpine
+- name: lint-webapp
+  image: node:lts-alpine
   commands:
-  - corepack pnpm@7.5.1 build
+  - cd webapp
+  - corepack pnpm@8.6.0 lint
+
+- name: build-webapp
+  image: node:lts-alpine
+  commands:
+  - cd webapp
+  - corepack pnpm@8.6.0 build
 
 - name: deploy
   image: plugins/docker

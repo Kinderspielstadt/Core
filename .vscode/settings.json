@@ -1,18 +1,29 @@
 {
   "cSpell.words": [
-    "appwrite",
     "camelcase",
     "checkin",
+    "classname",
     "cliffbreak",
     "corepack",
     "daisyui",
+    "esnext",
     "Gitea",
+    "godotenv",
     "heroicons",
     "kispi",
     "pnpm",
+    "pocketbase",
     "tailwindcss",
+    "typegen",
     "vite",
     "vitejs",
     "vueuse"
+  ],
+  "eslint.format.enable": true,
+  "eslint.workingDirectories": [
+    {
+        "directory": "webapp",
+        "changeProcessCWD": true
+    }
   ]
 }

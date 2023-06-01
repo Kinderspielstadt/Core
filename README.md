@@ -5,7 +5,7 @@
 </p>
 
 This is our repository containing all required resources to run the "Core" WebApp from the "Kinderspielstadt Öhringen".  
-This repository also contains all the required Appwrite cloud functions if any exist.
+This repository also contains all the required Pocketbase files to run the backend server.
 
 ## 🚀 Getting Started
 
@@ -15,7 +15,7 @@ See deployment for notes on how to deploy the project on a live system.
 ### 🍽️ Prerequisites
 
 `NodeJS (including PNPM)` is required to run this project.  
-Also a hosted instance of `Appwrite` is required.  
+Also `Go` is required to run the built in server.
 
 ### 📦 Installing
 
@@ -31,16 +31,54 @@ Change to the cloned repository
 cd Core
 ```
 
-To install all required packages run
+Copy the example environment file
 
 ```
-pnpm install
+cp .env.example .env
+
+```
+
+To install all required webapp packages run
+
+```
+cd webapp && pnpm install
 ```
 
 To start the webapp in development mode run the following npm script
 
 ```
-pnpm run dev
+pnpm dev
+```
+
+To build the webapp run the following npm script
+
+```
+pnpm build
+```
+
+To install all required server packages run
+
+```
+cd ../server && go mod download
+```
+
+To generate unique VAPID keys run the following Go command copy this keys to the `.env` file
+
+```
+go run main.go generate-vapid-keys
+```
+
+To start the server run the following Go command
+
+```
+go run main.go serve
+```
+
+If you do changes to the database schema keep in mind to `Export collections` via the Pocketbase UI.
+Paste the exported JSON into the `pb_schema.json` file and run the following npm script to update the frontend schema types.
+
+```
+cd ../webapp && pnpm typegen
 ```
 
 ## 🧑‍💻 Configure Visual Studio Code
@@ -58,7 +96,9 @@ Please refer to our **[COMMIT_CONVENTION](COMMIT_CONVENTION.md)**
 * [PNPM](https://pnpm.io/) - Faster alternative to npm for managing dependencies
 * [Vue.js](https://vuejs.org/) - The Frontend Web Framework
 * [Vite](https://vitejs.dev/) - Used Frontend Tooling
-* [Appwrite](https://docs.mongodb.com/) - The hosted Backend used for this application
+* [Go](https://go.dev/) - The Backend Programming Language
+* [Pocketbase](https://pocketbase.io/) - The Backend Framework
+
 
 ## 🤵 Authors
 

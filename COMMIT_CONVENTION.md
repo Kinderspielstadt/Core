@@ -26,7 +26,7 @@ docs(changelog): update change log to beta.5
 style(webapp): reorder imports
 ```
 ```
-fix(appwrite): need to depend on latest rxjs and zone.js
+fix(server): need to depend on latest rxjs and zone.js
 
 The version in our package.json gets copied to the one we publish, and users need the latest of these.
 ```
@@ -53,7 +53,7 @@ The following is the list of supported scopes (more to come):
 
 * **core** used for changes to the whole project
 * **webapp** used for changes made in the webapp
-* **appwrite** used for changes made in the Appwrite cloud functions
+* **server** used for changes made in the server
 * **changelog**: used for updating the release notes in CHANGELOG.md
 * none/empty string: useful for `style`, `test` and `refactor` changes that are done across all packages (e.g. `style: add missing semicolons`)
 
