@@ -1,12 +1,12 @@
 <template>
-  <div class="overflow-x-auto">
-    <table class="table-zebra table w-full">
-      <thead class="sticky top-0">
+  <div class="h-full overflow-x-auto rounded-lg">
+    <table class="table-pin-rows table-zebra table">
+      <thead class="uppercase">
         <tr>
           <th v-for="header in tableHeaders">{{ header.title }}</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="bg-base-100">
         <tr v-for="entry in data">
           <td
             v-for="header in tableHeaders"
@@ -84,7 +84,5 @@ export enum TableHeaderType {
 </script>
 
 <style lang="scss" scoped>
-.table th:first-child {
-  position: inherit;
-}
+
 </style>

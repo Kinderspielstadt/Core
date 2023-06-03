@@ -2,7 +2,7 @@
   <MoleculeAuthDialog v-if="!isAuthenticated" />
   <div
     v-else
-    class="lg:p-6"
+    class="flex h-full flex-col p-6"
   >
     <AtomInput
       v-model="searchQuery"
@@ -16,30 +16,30 @@
       :contact-modal-id="contactModalId"
       @open-contact-modal="openContactModal"
     />
-    <MoleculeContactModal
-      :id="contactModalId"
-      :contact-id="contactId"
-    />
-    <!-- <MoleculeMigrateAccountModal
-      :id="migrateAccountModalId"
-    />
-    <MoleculeAddAccountModal
-      :id="addAccountModalId"
-      @submit="addAccount"
-    /> -->
-    <label
-      class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-28 shadow-2xl"
-      :for="migrateAccountModalId"
-    >
-      <LifebuoyIcon class="h-7 w-7" />
-    </label>
-    <label
-      class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-8 shadow-2xl"
-      :for="addAccountModalId"
-    >
-      <PlusIcon class="h-7 w-7" />
-    </label>
   </div>
+  <MoleculeContactModal
+    :id="contactModalId"
+    :contact-id="contactId"
+  />
+  <!-- <MoleculeMigrateAccountModal
+    :id="migrateAccountModalId"
+  />
+  <MoleculeAddAccountModal
+    :id="addAccountModalId"
+    @submit="addAccount"
+  /> -->
+  <label
+    class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-28 shadow-2xl"
+    :for="migrateAccountModalId"
+  >
+    <LifebuoyIcon class="h-7 w-7" />
+  </label>
+  <label
+    class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-8 shadow-2xl"
+    :for="addAccountModalId"
+  >
+    <PlusIcon class="h-7 w-7" />
+  </label>
 </template>
 
 <script lang="ts" setup>
@@ -144,12 +144,10 @@ onMounted(async () => {
     getData();
   }
   accountsSubscription.value = await AccountService.subscribeToAccountChanges(async () => {
-    console.log('accounts changed');
     await getData();
     search(searchQuery.value);
   });
   transactionsSubscription.value = await BankService.subscribeToTransactionChanges(async () => {
-    console.log('transactions changed');
     await getData();
     search(searchQuery.value);
   });

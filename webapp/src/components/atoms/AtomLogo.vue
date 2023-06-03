@@ -1,13 +1,13 @@
 <template>
   <img
     v-if="isDark"
-    src="../../assets/logo_white.svg"
-    class="w-48 scale-[1.4]"
+    src="../../assets/svg/logo_white.svg"
+    class="w-48"
   />
   <img
     v-else
-    src="../../assets/logo_black.svg"
-    class="w-48 scale-[1.4]"
+    src="../../assets/svg/logo_black.svg"
+    class="w-48"
   />
 </template>
 

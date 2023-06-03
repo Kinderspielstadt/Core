@@ -1,13 +1,13 @@
 <template>
-  <div class="drawer-mobile drawer">
+  <div class="drawer lg:drawer-open">
     <input
       :id="drawerId"
       type="checkbox"
       class="drawer-toggle"
     />
-    <div class="drawer-content flex h-screen flex-col bg-base-300">
+    <div class="drawer-content flex h-screen flex-col overflow-y-scroll bg-base-300">
       <div
-        class="navbar sticky top-0 z-50 max-w-7xl place-self-center bg-neutral-focus text-neutral-content shadow-lg lg:hidden"
+        class="navbar top-0 max-w-7xl place-self-center bg-neutral-focus text-neutral-content shadow-lg lg:hidden"
       >
         <div class="flex-none">
           <label
@@ -31,11 +31,9 @@
         :for="drawerId"
         class="drawer-overlay"
       />
-      <ul class="menu w-64 overflow-y-auto bg-base-100 p-4">
+      <ul class="menu h-full w-64 overflow-y-auto bg-base-100 p-4">
         <li class="pointer-events-none">
-          <a>
-            <AtomLogo class="w-28" />
-          </a>
+          <AtomLogo class="w-28" />
         </li>
         <template v-if="isAuthenticated">
           <li class="pointer-events-none rounded-md bg-warning uppercase text-warning-content">
@@ -51,7 +49,7 @@
               Abmelden
             </span>
           </li>
-          <li class="menu-title" />
+          <li class="menu-title !p-0" />
         </template>
         <li
           v-for="navigationEntry of navigationEntries"
@@ -107,7 +105,7 @@ defineProps({
 function getNavigationEntryClass(navigationEntry: INavigationEntry) {
   return {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    'menu-title': navigationEntry.name === 'divider',
+    'menu-title !p-0': navigationEntry.name === 'divider',
     disabled: navigationEntry.disabled,
   };
 }

@@ -4,7 +4,7 @@
     title="Account hinzufügen"
   >
     <div class="flex flex-col gap-4">
-      <h4 class="text-md">Daten</h4>
+      <h4 class="text-lg">Daten</h4>
       <div class="flex gap-4">
         <AtomInput
           v-model="firstName"
@@ -46,7 +46,7 @@
           placeholder="Stadt"
         />
       </div>
-      <h4 class="text-md">Kontakt</h4>
+      <h4 class="text-lg">Kontakt</h4>
       <div
         v-for="index in contactCount"
         class="flex gap-4"

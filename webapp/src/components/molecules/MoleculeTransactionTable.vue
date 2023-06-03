@@ -1,12 +1,12 @@
 <template>
-  <table class="table-zebra table">
-    <thead>
+  <table class="table-zebra table overflow-hidden rounded-lg">
+    <thead class="bg-base-200">
       <tr>
         <th />
-        <th class="text-right text-lg normal-case">{{ CurrencyService.toString(balance) }}</th>
+        <th class="text-right text-lg normal-case text-base-content">{{ CurrencyService.toString(balance) }}</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="bg-base-100">
       <tr v-for="transaction in transactions">
         <td>
           <div class="flex items-center">
