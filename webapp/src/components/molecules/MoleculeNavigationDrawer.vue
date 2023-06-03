@@ -2,12 +2,13 @@
   <div class="drawer lg:drawer-open">
     <input
       :id="drawerId"
+      ref="drawerCheckbox"
       type="checkbox"
       class="drawer-toggle"
     />
     <div class="drawer-content flex h-screen flex-col overflow-y-scroll bg-base-300">
       <div
-        class="navbar top-0 max-w-7xl place-self-center bg-neutral-focus text-neutral-content shadow-lg lg:hidden"
+        class="navbar top-0 max-w-7xl place-self-center shadow-lg lg:hidden"
       >
         <div class="flex-none">
           <label
@@ -81,15 +82,18 @@
 
 <script lang="ts" setup>
 import { PropType, onMounted, ref } from 'vue';
-import { isDark, toggleDark } from '../../utils/darkMode';
+import { useEventBus } from '@vueuse/core';
+import { useRouter } from 'vue-router';
 import { INavigationEntry } from '../../interfaces/navigation-entry.interface';
+import { AuthService } from '../../services/auth.service';
+import { isDark, toggleDark } from '../../utils/darkMode';
 import { ArrowRightOnRectangleIcon, Bars3Icon, ExclamationTriangleIcon, MoonIcon, SunIcon } from '@heroicons/vue/24/outline';
 import AtomLogo from '../atoms/AtomLogo.vue';
 import AtomSwap from '../atoms/AtomSwap.vue';
-import { useEventBus } from '@vueuse/core';
-import { AuthService } from '../../services/auth.service';
 
 const isAuthenticated = ref(false);
+const router = useRouter();
+const drawerCheckbox = ref();
 
 defineProps({
   drawerId: {
@@ -114,6 +118,10 @@ useEventBus<boolean>('isAuthenticated').on(state => (isAuthenticated.value = sta
 
 onMounted(() => {
   isAuthenticated.value = AuthService.isAuthenticated();
+});
+
+router.afterEach(() => {
+  drawerCheckbox.value.checked = false;
 });
 </script>
 

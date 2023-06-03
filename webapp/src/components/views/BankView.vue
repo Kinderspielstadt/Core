@@ -15,7 +15,7 @@
   </div>
   <div
     v-if="account"
-    class="fixed bottom-0 flex place-content-center gap-16 bg-base-100 p-5 lg:w-[calc(100%-16rem)] lg:gap-32"
+    class="fixed bottom-0 flex w-full place-content-center gap-16 bg-base-100 p-5 lg:w-[calc(100%-16rem)] lg:gap-32"
   >
     <MoleculeInputModal
       :id="depositModalId"
