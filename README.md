@@ -1,5 +1,5 @@
 <h1 align="center">🔥 Core - Kinderspielstadt Öhringen 🔥</h1>
-<h3 align="center">Verwaltung + Bank + Radio = ❤️</h1>
+<h3 align="center">Personal data administration, user check in and a banking system</h1>
 <p align="center">
 <img height="600px" src=".docs/screenshot.png" alt="screenshot"/>
 </p>
@@ -22,7 +22,7 @@ Also `Go` is required to run the built in server.
 At first clone this repository to your local machine by using
 
 ```
-git clone https://git.cliffbreak.de/Kontast/Core.git
+git clone https://git.cliffbreak.de/Kispi/Core.git
 ```
 
 Change to the cloned repository
