@@ -6,6 +6,7 @@ export enum Collections {
 	Accounts = "accounts",
 	AccountsData = "accountsData",
 	AccountsList = "accountsList",
+	Colors = "colors",
 	Transactions = "transactions",
 }
 
@@ -34,11 +35,13 @@ export type AuthSystemFields<T = never> = {
 // Record types for each collection
 
 export type AccountsRecord = {
-	accountNumber: string
+	accountNumber?: string
+	picture?: string
 	firstName: string
 	lastName: string
+	color?: RecordIdString
 	lastCheckIn?: IsoDateString
-	personalData: RecordIdString
+	personalData?: RecordIdString
 }
 
 export type AccountsDataRecord = {
@@ -50,13 +53,23 @@ export type AccountsDataRecord = {
 	zipCode: number
 	city: string
 	phone: string
+	intolerances?: string
+	vegetarian?: boolean
+	oneweek?: boolean
 }
 
 export type AccountsListRecord<Tbalance = unknown, Tname = unknown> = {
-	accountNumber: string
+	accountNumber?: string
+	picture?: string
 	name?: null | Tname
+	color: string
 	lastCheckIn?: IsoDateString
 	balance?: null | Tbalance
+	vegetarian?: boolean
+}
+
+export type ColorsRecord = {
+	hex: string
 }
 
 export type TransactionsRecord = {
@@ -67,8 +80,9 @@ export type TransactionsRecord = {
 
 // Response types include system fields and match responses from the PocketBase API
 export type AccountsResponse<Texpand = unknown> = Required<AccountsRecord> & BaseSystemFields<Texpand>
-export type AccountsDataResponse = Required<AccountsDataRecord> & BaseSystemFields
-export type AccountsListResponse<Tbalance = unknown, Tname = unknown> = Required<AccountsListRecord<Tbalance, Tname>> & BaseSystemFields
+export type AccountsDataResponse<Texpand = unknown> = Required<AccountsDataRecord> & BaseSystemFields<Texpand>
+export type AccountsListResponse<Tbalance = unknown, Tname = unknown, Texpand = unknown> = Required<AccountsListRecord<Tbalance, Tname>> & BaseSystemFields<Texpand>
+export type ColorsResponse<Texpand = unknown> = Required<ColorsRecord> & BaseSystemFields<Texpand>
 export type TransactionsResponse<Texpand = unknown> = Required<TransactionsRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -77,6 +91,7 @@ export type CollectionRecords = {
 	accounts: AccountsRecord
 	accountsData: AccountsDataRecord
 	accountsList: AccountsListRecord
+	colors: ColorsRecord
 	transactions: TransactionsRecord
 }
 
@@ -84,5 +99,6 @@ export type CollectionResponses = {
 	accounts: AccountsResponse
 	accountsData: AccountsDataResponse
 	accountsList: AccountsListResponse
+	colors: ColorsResponse
 	transactions: TransactionsResponse
 }

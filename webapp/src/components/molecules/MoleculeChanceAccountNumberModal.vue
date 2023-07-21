@@ -6,11 +6,9 @@
     @close="handleClose"
   >
     <div class="flex place-items-center justify-between">
-      <span>{{ inputLabel }}</span>
-      <AtomCurrencyInput
-        v-model="amount"
+      <AtomInput
+        v-model="accountNumber"
         class="w-4/12"
-        :max="1000"
         @keyup.esc="modal?.close()"
       />
     </div>
@@ -28,7 +26,7 @@
         @click="handleSubmit()"
       >
         <CheckCircleIcon class="h-6 w-6" />
-        {{ actionLabel }}
+        Speichern
       </button>
     </template>
   </AtomModal>
@@ -37,11 +35,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/outline';
-import AtomCurrencyInput from '../atoms/AtomCurrencyInput.vue';
 import AtomModal from '../atoms/AtomModal.vue';
+import AtomInput from '../atoms/AtomInput.vue';
 
 const modal = ref<InstanceType<typeof AtomModal>>();
-const amount = ref();
+const accountNumber = ref('');
+const accountId = ref('');
 
 defineProps({
   id: {
@@ -52,31 +51,29 @@ defineProps({
     type: String,
     required: true,
   },
-  actionLabel: {
-    type: String,
-    required: true,
-  },
-  inputLabel: {
-    type: String,
-    required: true,
-  },
 });
 
 const emit = defineEmits(['submit']);
 
 function handleClose() {
-  amount.value = '';
+  accountNumber.value = '';
 }
 
 function handleSubmit() {
-  if(amount.value <= 0) {
+  if(!accountNumber.value) {
     return;
   }
-  emit('submit', amount.value);
+  emit('submit', {
+    id: accountId.value,
+    accountNumber: accountNumber.value,
+  });
 }
 
 defineExpose({
-  show: () => modal.value?.show(),
+  show: (id: string) => {
+    accountId.value = id;
+    modal.value?.show();
+  },
   close: () => modal.value?.close(),
   isOpen: () => modal.value?.isOpen(),
 });

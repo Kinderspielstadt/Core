@@ -55,6 +55,33 @@
     "options": {}
   },
   {
+    "id": "a5ws993a92k9e30",
+    "name": "colors",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "xtditwzx",
+        "name": "hex",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 7,
+          "max": 7,
+          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
     "id": "p0gixtx6jwria0d",
     "name": "accountsData",
     "type": "base",
@@ -152,6 +179,34 @@
           "max": null,
           "pattern": ""
         }
+      },
+      {
+        "id": "gvxgpwoy",
+        "name": "intolerances",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "b0pbmkzu",
+        "name": "vegetarian",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "3daruq8m",
+        "name": "oneweek",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
       }
     ],
     "indexes": [],
@@ -161,6 +216,99 @@
     "updateRule": null,
     "deleteRule": null,
     "options": {}
+  },
+  {
+    "id": "c3zz98wpbn7m6zw",
+    "name": "accountsList",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "id": "0isywenj",
+        "name": "accountNumber",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "yw8uzp4n",
+        "name": "picture",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg"
+          ],
+          "thumbs": [],
+          "protected": false
+        }
+      },
+      {
+        "id": "kysoolf8",
+        "name": "name",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "dst9c5ml",
+        "name": "color",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 7,
+          "max": 7,
+          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
+        }
+      },
+      {
+        "id": "jffwqqy9",
+        "name": "lastCheckIn",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "6iuqm7ug",
+        "name": "balance",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "brwz2pht",
+        "name": "vegetarian",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id"
+    }
   },
   {
     "id": "74ftooxenpeq14b",
@@ -173,11 +321,28 @@
         "name": "accountNumber",
         "type": "text",
         "system": false,
-        "required": true,
+        "required": false,
         "options": {
           "min": null,
           "max": null,
           "pattern": ""
+        }
+      },
+      {
+        "id": "a19ww3ll",
+        "name": "picture",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg"
+          ],
+          "thumbs": [],
+          "protected": false
         }
       },
       {
@@ -205,6 +370,22 @@
         }
       },
       {
+        "id": "luko6fp9",
+        "name": "color",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "options": {
+          "collectionId": "a5ws993a92k9e30",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": [
+            "hex"
+          ]
+        }
+      },
+      {
         "id": "syfivtki",
         "name": "lastCheckIn",
         "type": "date",
@@ -227,15 +408,13 @@
           "minSelect": null,
           "maxSelect": 1,
           "displayFields": [
-            "firstNameParent",
-            "lastNameParent",
-            "email"
+            "id"
           ]
         }
       }
     ],
     "indexes": [
-      "CREATE UNIQUE INDEX `idx_mPdvrAQ` ON `accounts` (`accountNumber`)"
+      "CREATE INDEX `idx_mPdvrAQ` ON `accounts` (`accountNumber`)"
     ],
     "listRule": "",
     "viewRule": null,
@@ -243,61 +422,5 @@
     "updateRule": "@request.data.id = null && @request.data.accountNumber = null && @request.data.firstName = null && @request.data.lastName = null && @request.data.created = null && @request.data.updated = null",
     "deleteRule": null,
     "options": {}
-  },
-  {
-    "id": "c3zz98wpbn7m6zw",
-    "name": "accountsList",
-    "type": "view",
-    "system": false,
-    "schema": [
-      {
-        "id": "gw7zo5sb",
-        "name": "accountNumber",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "44jwqwg4",
-        "name": "name",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "dwqo9wuf",
-        "name": "lastCheckIn",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "etoowqoa",
-        "name": "balance",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      }
-    ],
-    "indexes": [],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {
-      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  (a.firstName || ' ' || a.lastName) AS name,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nGROUP BY\n  a.id"
-    }
   }
 ]

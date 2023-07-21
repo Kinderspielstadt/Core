@@ -6,19 +6,19 @@ steps:
   image: node:lts-alpine
   commands:
   - cd webapp
-  - corepack pnpm@8.6.0 install
+  - corepack pnpm@8.6.9 install
 
 - name: lint-webapp
   image: node:lts-alpine
   commands:
   - cd webapp
-  - corepack pnpm@8.6.0 lint
+  - corepack pnpm@8.6.9 lint
 
 - name: build-webapp
   image: node:lts-alpine
   commands:
   - cd webapp
-  - corepack pnpm@8.6.0 build
+  - corepack pnpm@8.6.9 build
 
 - name: deploy
   image: plugins/docker

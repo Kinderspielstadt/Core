@@ -1,5 +1,5 @@
 <template>
-  <table class="table-zebra table overflow-hidden rounded-lg">
+  <table class="table table-zebra overflow-hidden rounded-lg">
     <thead class="bg-base-200">
       <tr>
         <th />

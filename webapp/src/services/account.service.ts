@@ -20,6 +20,12 @@ export class AccountService {
   public static getAccountDetails(id: string): Promise<AccountsResponse<{personalData: AccountsDataResponse}>> {
     return COLLECTION.getOne(id, { expand: 'personalData' });
   }
+  public static async updateAccountNumber(accountId: string, accountNumber: string): Promise<AccountsResponse> {
+    return COLLECTION.update(accountId, { accountNumber });
+  }
+  public static async updateColor(accountId: string, color?: string): Promise<AccountsResponse> {
+    return COLLECTION.update(accountId, { color: color || null });
+  }
   public static async subscribeToAccountChanges(
     callback: (data: RecordSubscription<AccountsResponse>)=> void,
   ): Promise<UnsubscribeFunc> {

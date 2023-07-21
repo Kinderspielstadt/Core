@@ -1,66 +1,88 @@
 <template>
   <Teleport to="body">
-    <input
+    <dialog
       :id="id"
-      type="checkbox"
-      class="modal-toggle"
-      @change="$emit('open', {id, open: ($event.target as HTMLInputElement).checked})"
-    />
-    <label
-      :for="id"
-      class="modal cursor-pointer"
+      class="modal"
     >
-      <label
+      <form
+        method="dialog"
         class="modal-box"
         :class="{
           'bg-base-300': darker,
           'w-auto': wAuto,
+          'max-w-none': wAuto,
         }"
-        for=""
       >
-        <label
+        <button
           v-if="closeButton"
-          :for="id"
-          class="btn-sm btn-circle btn sticky left-full top-2"
-        >✕</label>
+          class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
+        >
+          ✕
+        </button>
         <h3
           v-if="title"
           class="text-lg font-bold"
-        >{{ title }}</h3>
+        >
+          {{ title }}
+        </h3>
         <p class="py-4"><slot /></p>
         <div class="modal-action">
           <slot name="action" />
         </div>
-      </label>
-    </label>
+      </form>
+      <form
+        method="dialog"
+        class="modal-backdrop"
+      >
+        <button>close</button>
+      </form>
+    </dialog>
   </Teleport>
 </template>
 
 <script lang="ts" setup>
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    default: '',
-  },
-  darker: {
-    type: Boolean,
-    default: false,
-  },
-  closeButton: {
-    type: Boolean,
-    default: false,
-  },
-  wAuto: {
-    type: Boolean,
-    default: false,
-  },
+import { onMounted } from 'vue';
+
+const props = withDefaults(defineProps<{
+  id: string,
+  title?: string,
+  darker?: boolean,
+  closeButton?: boolean,
+  wAuto?: boolean,
+}>(), {
+  title: '',
+  darker: false,
+  closeButton: false,
+  wAuto: false,
 });
 
-defineEmits(['open']);
+function show(): void {
+  (document.getElementById(props.id) as HTMLDialogElement)?.showModal();
+}
+
+function close(): void {
+  (document.getElementById(props.id) as HTMLDialogElement)?.close();
+}
+
+function isOpen(): boolean {
+  return (document.getElementById(props.id) as HTMLDialogElement)?.open;
+}
+
+onMounted(() => {
+  (document.getElementById(props.id) as HTMLDialogElement).addEventListener('close', () => {
+    emit('close');
+  });
+});
+
+const emit = defineEmits<{
+  close: [],
+}>();
+
+defineExpose({
+  show,
+  close,
+  isOpen,
+});
 </script>
 
 <style lang="scss" scoped>

@@ -13,13 +13,13 @@
         <div class="flex-none">
           <label
             :for="drawerId"
-            class="btn-ghost rounded-btn btn lg:hidden"
+            class="btn btn-ghost rounded-btn lg:hidden"
           >
             <Bars3Icon class="h-7 w-7" />
           </label>
           <label
             tabindex="0"
-            class="btn-ghost avatar btn"
+            class="avatar btn btn-ghost"
           >
             <AtomLogo class="w-12" />
           </label>

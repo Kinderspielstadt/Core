@@ -4,8 +4,8 @@
     class="hero-content flex-col pt-0 text-center lg:p-6"
   >
     <h1 class="mt-5 text-8xl">{{ CurrencyService.toString(getBalance()) }}</h1>
-    <h3 class="mt-10 text-5xl font-bold">Kontoinhaber: {{ `${account.firstName} ${account.lastName}` }}</h3>
-    <h4 class="mb-10 text-4xl">Kontonummer: {{ account.accountNumber }}</h4>
+    <h3 class="mt-10 text-5xl font-bold">{{ `${account.firstName} ${account.lastName}` }}</h3>
+    <h4 class="mb-10 text-4xl">{{ account.accountNumber }}</h4>
     <MoleculeTransactionTable
       v-if="transactions"
       class="mb-24 max-w-[42rem]"
@@ -18,53 +18,50 @@
     class="fixed bottom-0 flex w-full place-content-center gap-16 bg-base-100 p-5 lg:w-[calc(100%-16rem)] lg:gap-32"
   >
     <MoleculeInputModal
-      :id="depositModalId"
+      id="deposit-modal"
+      ref="depositModal"
       title="Einzahlung"
       action-label="Einzahlen"
-      input-label="Einzuzahlender Betrag:"
+      input-label="Einzuzahlender Betrag"
       @submit="handleDeposit"
-      @open="depositModalOpen = $event.open"
     />
-    <label
-      ref="depositModalLabel"
+    <button
       class="btn gap-2"
-      :for="depositModalId"
+      @click="() => depositModal?.show()"
     >
       <ChevronUpIcon class="h-6 w-6 text-success" />
       Einzahlen
-    </label>
+    </button>
     <MoleculeInputModal
-      :id="salaryModalId"
+      id="salary-modal"
+      ref="salaryModal"
       title="Gehalt"
       action-label="Gehalt hinzufügen"
-      input-label="Gehalt Betrag:"
+      input-label="Gehalt Betrag"
       @submit="handleSalary"
-      @open="salaryModalOpen = $event.open"
     />
-    <label
-      ref="salaryModalLabel"
+    <button
       class="btn gap-2"
-      :for="salaryModalId"
+      @click="() => salaryModal?.show()"
     >
       <CurrencyDollarIcon class="h-6 w-6 text-warning" />
       Gehalt
-    </label>
+    </button>
     <MoleculeInputModal
-      :id="withdrawModalId"
+      id="withdraw-modal"
+      ref="withdrawModal"
       title="Auszahlung"
       action-label="Auszahlen"
-      input-label="Auszuzahlender Betrag:"
+      input-label="Auszuzahlender Betrag"
       @submit="handleWithdraw"
-      @open="withdrawModalOpen = $event.open"
     />
-    <label
-      ref="withdrawModalLabel"
+    <button
       class="btn gap-2"
-      :for="withdrawModalId"
+      @click="() => withdrawModal?.show()"
     >
       <ChevronDownIcon class="h-6 w-6 text-error" />
       Auszahlen
-    </label>
+    </button>
   </div>
   <AtomHeroText v-else>
     Bitte Karte scannen...
@@ -97,19 +94,12 @@ const subscription = ref<UnsubscribeFunc>();
 
 const account = ref<AccountsResponse|null>();
 const transactions = ref<TransactionsResponse[]>();
-const depositModalLabel = ref<HTMLLabelElement>();
-const salaryModalLabel = ref<HTMLLabelElement>();
-const withdrawModalLabel = ref<HTMLLabelElement>();
 const accountId = ref<string>('');
 const inputBuffer = ref<string>('');
-const depositModalOpen = ref<boolean>(false);
-const salaryModalOpen = ref<boolean>(false);
-const withdrawModalOpen = ref<boolean>(false);
 const error = ref('');
-
-const depositModalId = 'deposit-modal';
-const salaryModalId = 'salary-modal';
-const withdrawModalId = 'withdraw-modal';
+const depositModal = ref<InstanceType<typeof MoleculeInputModal>>();
+const salaryModal = ref<InstanceType<typeof MoleculeInputModal>>();
+const withdrawModal = ref<InstanceType<typeof MoleculeInputModal>>();
 
 if(router.currentRoute.value.query.accountNumber) {
   accountId.value = router.currentRoute.value.query.accountNumber as string;
@@ -119,24 +109,24 @@ if(router.currentRoute.value.query.accountNumber) {
 
 onKeyStroke(['e', 'g', 'a'], (e) => {
   e.preventDefault();
-  if(depositModalOpen.value || salaryModalOpen.value || withdrawModalOpen.value) {
+  if(depositModal.value?.isOpen() || salaryModal.value?.isOpen() || withdrawModal.value?.isOpen()) {
     return;
   }
   switch (e.key) {
   case 'e':
-    depositModalLabel.value?.click();
+    depositModal.value?.show();
     break;
   case 'g':
-    salaryModalLabel.value?.click();
+    salaryModal.value?.show();
     break;
   case 'a':
-    withdrawModalLabel.value?.click();
+    withdrawModal.value?.show();
     break;
   }
 });
 
 onKeyStroke(['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'Enter'], (e) => {
-  if(depositModalOpen.value || salaryModalOpen.value || withdrawModalOpen.value) {
+  if(depositModal.value?.isOpen() || salaryModal.value?.isOpen() || withdrawModal.value?.isOpen()) {
     return;
   }
   error.value = '';

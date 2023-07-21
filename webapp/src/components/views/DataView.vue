@@ -6,79 +6,81 @@
   >
     <AtomInput
       v-model="searchQuery"
-      placeholder="Nach Vor-/Nachname suchen"
+      placeholder="Nach Vor-/Nachname oder Kontonummer suchen"
       class="mb-4"
     />
     <MoleculeDataTable
       v-if="accounts"
       :table-headers="tableHeaders"
       :data="accounts"
-      :contact-modal-id="contactModalId"
-      @open-contact-modal="openContactModal"
+      :colors="colors"
+      @change-account-number="changeAccountNumberModal?.show($event);"
+      @open-contact-modal="contactInformationModal?.show($event);"
+      @update-color="updateColor"
+    />
+    <MoleculeChanceAccountNumberModal
+      id="changeAccountNumber"
+      ref="changeAccountNumberModal"
+      title="Kontonummer ändern"
+      @submit="changeAccountNumber"
     />
   </div>
   <MoleculeContactModal
-    :id="contactModalId"
-    :contact-id="contactId"
+    id="contactInformation"
+    ref="contactInformationModal"
   />
-  <!-- <MoleculeMigrateAccountModal
-    :id="migrateAccountModalId"
-  />
-  <MoleculeAddAccountModal
-    :id="addAccountModalId"
-    @submit="addAccount"
-  /> -->
-  <label
-    class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-28 shadow-2xl"
-    :for="migrateAccountModalId"
-  >
-    <LifebuoyIcon class="h-7 w-7" />
-  </label>
-  <label
-    class="btn-primary btn-circle btn-lg btn fixed bottom-8 right-8 shadow-2xl"
-    :for="addAccountModalId"
-  >
-    <PlusIcon class="h-7 w-7" />
-  </label>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useEventBus } from '@vueuse/core';
 import { UnsubscribeFunc } from 'pocketbase';
-import { BankService } from '../../services/bank.service';
-import { AccountsListResponse } from '../../types/pocketbase.types';
 import { AccountService } from '../../services/account.service';
+import { AccountsListResponse, ColorsResponse } from '../../types/pocketbase.types';
 import { AuthService } from '../../services/auth.service';
-import { LifebuoyIcon, PlusIcon } from '@heroicons/vue/24/outline';
+import { BankService } from '../../services/bank.service';
 import AtomInput from '../atoms/AtomInput.vue';
-import MoleculeAddAccountModal from '../molecules/MoleculeAddAccountModal.vue';
 import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
 import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
-import MoleculeMigrateAccountModal from '../molecules/MoleculeMigrateAccountModal.vue';
 import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
+import MoleculeChanceAccountNumberModal from '../molecules/MoleculeChanceAccountNumberModal.vue';
+import { ColorService } from '../../services/color.service';
 
 const isAuthenticated = ref(false);
 const accountsSubscription = ref<UnsubscribeFunc>();
 const transactionsSubscription = ref<UnsubscribeFunc>();
+const changeAccountNumberModal = ref<InstanceType<typeof MoleculeChanceAccountNumberModal>>();
+const contactInformationModal = ref<InstanceType<typeof MoleculeContactModal>>();
+const colors = ref<ColorsResponse[]>([]);
 
 const accounts = ref<AccountsListResponse<number, string>[]>([]);
 const initAccounts = ref<AccountsListResponse<number, string>[]>([]);
 const searchQuery = ref('');
-const contactId = ref('');
-const contactModalId = 'contact-modal';
-const addAccountModalId = 'add-account-modal';
-const migrateAccountModalId = 'migrate-account-modal';
 const tableHeaders = [
   {
-    title: 'Kontonummer',
+    title: 'Knr.',
     key: 'accountNumber',
     type: TableHeaderType.STRING,
+  },
+  {
+    title: 'Bild',
+    key: 'picture',
+    type: TableHeaderType.PICTURE,
   },
   {
     title: 'Name',
     key: 'name',
     type: TableHeaderType.STRING,
+  },
+  {
+    title: 'Farbe',
+    key: 'color',
+    type: TableHeaderType.COLOR,
+  },
+  {
+    title: 'Essen',
+    key: 'vegetarian',
+    type: TableHeaderType.VEGETARIAN,
   },
   {
     title: 'Letzter Check-In',
@@ -96,20 +98,24 @@ const tableHeaders = [
     type: TableHeaderType.BUTTON_ACCOUNT,
   },
   {
-    title: 'Pers. Daten',
+    title: 'Daten',
     key: '',
     type: TableHeaderType.BUTTON_CONTACT,
   },
+  {
+    title: 'Änd.',
+    key: '',
+    type: TableHeaderType.BUTTON_CHANGE_ACCOUNT_NUMBER,
+  },
 ];
 
-function openContactModal(id: string) {
-  contactId.value = id;
+function changeAccountNumber(account: {id: string, accountNumber: string}) {
+  AccountService.updateAccountNumber(account.id, account.accountNumber);
 }
 
-// function addAccount(account: IAccountData) {
-//   data.value.push(account);
-//   initialData.value = data.value;
-// }
+function updateColor(id: string, colorId?: string) {
+  AccountService.updateColor(id, colorId);
+}
 
 useEventBus<boolean>('isAuthenticated').on(state => {
   isAuthenticated.value = state;
@@ -133,13 +139,14 @@ watch(
 function search(value: string) {
   if(initAccounts.value) {
     accounts.value = initAccounts.value.filter((account) =>
-      account.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()),
+      account.accountNumber?.includes(value) || account.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()),
     );
   }
 }
 
 onMounted(async () => {
   isAuthenticated.value = AuthService.isAuthenticated();
+  colors.value = await ColorService.getColors();
   if(isAuthenticated.value) {
     getData();
   }

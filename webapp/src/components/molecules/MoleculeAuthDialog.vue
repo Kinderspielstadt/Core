@@ -16,7 +16,7 @@
         type="password"
         required
       />
-      <button class="btn gap-2 self-end">
+      <button class="btn btn-primary gap-2 self-end">
         <ArrowRightOnRectangleIcon class="h-6 w-6" />
         Login
       </button>

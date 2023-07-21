@@ -5,7 +5,7 @@
     :required="required"
     :placeholder="placeholder"
     :value="modelValue"
-    class="input-bordered input w-full"
+    class="input input-bordered input-primary w-full"
     @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
   />
 </template>

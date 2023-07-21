@@ -12,20 +12,14 @@ import { INavigationEntry } from './interfaces/navigation-entry.interface';
 import {
   IdentificationIcon,
   BuildingLibraryIcon,
-  ArrowRightOnRectangleIcon,
   MusicalNoteIcon,
   ArrowTrendingUpIcon,
-  UserIcon,
+  AdjustmentsHorizontalIcon,
 } from '@heroicons/vue/24/outline';
 import MoleculeNavigationDrawer from './components/molecules/MoleculeNavigationDrawer.vue';
 
 const drawerId = 'default-drawer';
 const navigationEntries: INavigationEntry[] = [
-  {
-    name: 'Stammdaten',
-    icon: UserIcon,
-    to: '/data',
-  },
   {
     name: 'Einstempeln',
     icon: IdentificationIcon,
@@ -48,14 +42,11 @@ const navigationEntries: INavigationEntry[] = [
     to: '/radio',
     disabled: true,
   },
-  // {
-  //   name: 'divider',
-  // },
-  // {
-  //   name: 'Abmelden',
-  //   icon: ArrowRightOnRectangleIcon,
-  //   to: '/logout',
-  // },
+  {
+    name: 'Einstellungen',
+    icon: AdjustmentsHorizontalIcon,
+    to: '/settings',
+  },
 ];
 </script>
 

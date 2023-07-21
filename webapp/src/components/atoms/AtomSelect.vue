@@ -1,6 +1,6 @@
 <template>
   <select
-    class="select-bordered select w-full"
+    class="select select-bordered w-full"
     @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
   >
     <option

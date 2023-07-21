@@ -1,10 +1,11 @@
 <template>
   <AtomModal
     :id="id"
+    ref="modal"
     close-button
     w-auto
   >
-    <div class="-my-16 overflow-x-auto">
+    <div class="-my-10 overflow-x-auto">
       <template v-if="accountDetails">
         <div class="stats stats-vertical">
           <div class="stat">
@@ -29,6 +30,18 @@
           </div>
           <template v-if="accountDetails.expand?.personalData">
             <div class="stat">
+              <div class="stat-title">Essen</div>
+              <div class="stat-value">{{ accountDetails.expand.personalData.vegetarian ? 'Vegetarisch' : 'Fleisch-Esser:in' }}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">Unverträglichkeiten</div>
+              <div class="stat-value">{{ accountDetails.expand.personalData.intolerances || 'N/A' }}</div>
+            </div>
+            <div class="stat">
+              <div class="stat-title">Teilnahme</div>
+              <div class="stat-value">{{ accountDetails.expand.personalData.oneweek ? 'Eine Woche' : 'Zwei Wochen' }}</div>
+            </div>
+            <div class="stat">
               <div class="stat-title">Geburtstag</div>
               <div class="stat-value">{{ DateService.toShortString(new Date(accountDetails.expand.personalData.birthday)) }}</div>
             </div>
@@ -45,31 +58,21 @@
               <div class="stat-value">{{ accountDetails.expand.personalData.street }}</div>
               <div class="stat-desc">{{ accountDetails.expand.personalData.zipCode }} {{ accountDetails.expand.personalData.city }}</div>
             </div>
-            <div
-              class="stat cursor-pointer"
-              @click="truncateEmail = !truncateEmail"
-            >
+            <div class="stat">
               <div class="stat-title">E-Mail-Adresse</div>
               <div
                 class="stat-value"
-                :class="{'truncate': truncateEmail}"
               >
                 {{ accountDetails.expand.personalData.email }}
               </div>
-              <div class="stat-desc">Um die E-Mail-Adresse komplett anzuzeigen, bitte drücken und scrollen.</div>
             </div>
-            <div
-              class="stat cursor-pointer"
-              @click="truncatePhone = !truncatePhone"
-            >
+            <div class="stat">
               <div class="stat-title">Telefonnummer</div>
               <div
                 class="stat-value"
-                :class="{'truncate': truncatePhone}"
               >
                 {{ accountDetails.expand.personalData.phone }}
               </div>
-              <div class="stat-desc">Um die Telefonnummer komplett anzuzeigen, bitte drücken und scrollen.</div>
             </div>
           </template>
           <template
@@ -87,31 +90,26 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 import { AccountsDataResponse, AccountsResponse } from '../../types/pocketbase.types';
 import { AccountService } from '../../services/account.service';
 import { DateService } from '../../services/date.service';
 import AtomModal from '../atoms/AtomModal.vue';
 
+const modal = ref<InstanceType<typeof AtomModal>>();
 const accountDetails = ref<AccountsResponse<{personalData: AccountsDataResponse}>>();
-const truncateEmail = ref(true);
-const truncatePhone = ref(true);
 
-const props = defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  contactId: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  id: string,
+}>();
 
-watch(() => props.contactId, async (contactId) => {
-  if(contactId) {
-    accountDetails.value = await AccountService.getAccountDetails(contactId);
-  }
+defineExpose({
+  show: async (id: string) => {
+    accountDetails.value = await AccountService.getAccountDetails(id);
+    modal.value?.show();
+  },
+  close: () => modal.value?.close(),
+  isOpen: () => modal.value?.isOpen(),
 });
 </script>
 
