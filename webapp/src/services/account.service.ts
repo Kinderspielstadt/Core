@@ -26,6 +26,9 @@ export class AccountService {
   public static async updateColor(accountId: string, color?: string): Promise<AccountsResponse> {
     return COLLECTION.update(accountId, { color: color || null });
   }
+  public static async updatePicture(accountId: string, data: FormData): Promise<AccountsResponse> {
+    return COLLECTION.update(accountId, data);
+  }
   public static async subscribeToAccountChanges(
     callback: (data: RecordSubscription<AccountsResponse>)=> void,
   ): Promise<UnsubscribeFunc> {

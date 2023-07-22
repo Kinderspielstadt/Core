@@ -19,7 +19,13 @@
             <span v-if="header.type === TableHeaderType.STRING">
               {{ entry[header.key] }}
             </span>
-            <span v-else-if="header.type === TableHeaderType.PICTURE">
+            <span
+              v-else-if="header.type === TableHeaderType.PICTURE"
+              :class="{
+                'cursor-pointer': cameraEnabled,
+              }"
+              @click="$emit('pictureClick', entry.id)"
+            >
               <img
                 v-if="entry[header.key]"
                 :src="FileService.getAvatar(entry.id, entry[header.key])"
@@ -107,12 +113,14 @@ defineProps<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[],
   colors?: ColorsResponse[],
+  cameraEnabled?: boolean,
 }>();
 
 defineEmits<{
   openContactModal: [id: string],
   changeAccountNumber: [id: string],
   updateColor: [id: string, colorId: string],
+  pictureClick: [id: string],
 }>();
 </script>
 

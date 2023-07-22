@@ -14,9 +14,11 @@
       :table-headers="tableHeaders"
       :data="accounts"
       :colors="colors"
+      :camera-enabled="cameraEnabled"
       @change-account-number="changeAccountNumberModal?.show($event);"
       @open-contact-modal="contactInformationModal?.show($event);"
       @update-color="updateColor"
+      @picture-click="updatePictureModal?.show($event);"
     />
     <MoleculeChanceAccountNumberModal
       id="changeAccountNumber"
@@ -29,6 +31,24 @@
     id="contactInformation"
     ref="contactInformationModal"
   />
+  <MoleculeUpdatePictureModal
+    v-if="cameraEnabled"
+    id="updatePicture"
+    ref="updatePictureModal"
+  />
+  <button
+    class="btn btn-circle btn-primary fixed bottom-4 right-4 h-14 w-14"
+    @click="toggleCameraEnabled"
+  >
+    <VideoCameraIcon
+      v-if="cameraEnabled"
+      class="h-8 w-8"
+    />
+    <VideoCameraSlashIcon
+      v-else
+      class="h-8 w-8"
+    />
+  </button>
 </template>
 
 <script lang="ts" setup>
@@ -39,19 +59,23 @@ import { AccountService } from '../../services/account.service';
 import { AccountsListResponse, ColorsResponse } from '../../types/pocketbase.types';
 import { AuthService } from '../../services/auth.service';
 import { BankService } from '../../services/bank.service';
+import { ColorService } from '../../services/color.service';
+import { VideoCameraIcon, VideoCameraSlashIcon } from '@heroicons/vue/24/outline';
 import AtomInput from '../atoms/AtomInput.vue';
 import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
 import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
 import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
 import MoleculeChanceAccountNumberModal from '../molecules/MoleculeChanceAccountNumberModal.vue';
-import { ColorService } from '../../services/color.service';
+import MoleculeUpdatePictureModal from '../molecules/MoleculeUpdatePictureModal.vue';
 
 const isAuthenticated = ref(false);
 const accountsSubscription = ref<UnsubscribeFunc>();
 const transactionsSubscription = ref<UnsubscribeFunc>();
 const changeAccountNumberModal = ref<InstanceType<typeof MoleculeChanceAccountNumberModal>>();
 const contactInformationModal = ref<InstanceType<typeof MoleculeContactModal>>();
+const updatePictureModal = ref<InstanceType<typeof MoleculeUpdatePictureModal>>();
 const colors = ref<ColorsResponse[]>([]);
+const cameraEnabled = ref(false);
 
 const accounts = ref<AccountsListResponse<number, string>[]>([]);
 const initAccounts = ref<AccountsListResponse<number, string>[]>([]);
@@ -127,6 +151,13 @@ useEventBus<boolean>('isAuthenticated').on(state => {
 async function getData() {
   initAccounts.value = await AccountService.getAccounts();
   accounts.value = initAccounts.value;
+}
+
+function toggleCameraEnabled() {
+  cameraEnabled.value = !cameraEnabled.value;
+  if(!cameraEnabled.value) {
+    updatePictureModal.value?.disableCamera();
+  }
 }
 
 watch(
