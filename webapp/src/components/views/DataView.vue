@@ -14,6 +14,7 @@
       :table-headers="tableHeaders"
       :data="accounts"
       :colors="colors"
+      default-sort-key="name"
       :camera-enabled="cameraEnabled"
       @change-account-number="changeAccountNumberModal?.show($event);"
       @open-contact-modal="contactInformationModal?.show($event);"

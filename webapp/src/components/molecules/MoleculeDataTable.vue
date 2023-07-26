@@ -3,11 +3,34 @@
     <table class="table table-zebra table-pin-rows">
       <thead class="uppercase">
         <tr>
-          <th v-for="header in tableHeaders">{{ header.title }}</th>
+          <th
+            v-for="header in tableHeaders"
+            class="select-none"
+            :class="{
+              'cursor-pointer': !noSortKeys.includes(header.type),
+            }"
+            @click="sortData(header.key)"
+          >
+            <div class="flex justify-between gap-2">
+              {{ header.title }}
+              <BarsArrowDownIcon
+                v-if="header.key === currentSortKey && sortDirection === 'DOWN'"
+                class="h-4 w-4"
+              />
+              <BarsArrowUpIcon
+                v-else-if="header.key === currentSortKey && sortDirection === 'UP'"
+                class="h-4 w-4"
+              />
+              <div
+                v-else
+                class="h-4 w-4"
+              />
+            </div>
+          </th>
         </tr>
       </thead>
       <tbody class="bg-base-100">
-        <tr v-for="entry in data">
+        <tr v-for="entry in sortedData">
           <td
             v-for="header in tableHeaders"
             :class="{
@@ -28,7 +51,7 @@
             >
               <img
                 v-if="entry[header.key]"
-                :src="FileService.getAvatar(entry.id, entry[header.key])"
+                :src="FileService.getSmallAvatar(entry.id, entry[header.key])"
                 class="m-auto h-10 w-10 rounded-full"
               />
               <div
@@ -104,17 +127,56 @@ import { ColorsResponse } from '../../types/pocketbase.types';
 import { DateService } from '../../services/date.service';
 import { CurrencyService } from '../../services/currency.service';
 import { FileService } from '../../services/file.service';
-import { CreditCardIcon, CurrencyDollarIcon, DocumentTextIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { BarsArrowDownIcon, BarsArrowUpIcon, CreditCardIcon, CurrencyDollarIcon, DocumentTextIcon, XMarkIcon } from '@heroicons/vue/24/outline';
 import MoleculeColorSelector from '../molecules/MoleculeColorSelector.vue';
+import { onMounted, ref, watch } from 'vue';
 
-defineProps<{
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const sortedData = ref<any[]>([]);
+const currentSortKey = ref('');
+const sortDirection = ref<'UP' | 'DOWN'>('DOWN');
+
+const noSortKeys = [
+  TableHeaderType.BUTTON_ACCOUNT,
+  TableHeaderType.BUTTON_CONTACT,
+  TableHeaderType.BUTTON_CHANGE_ACCOUNT_NUMBER,
+];
+
+const props = defineProps<{
   tableHeaders: { title: string, key: string, type: TableHeaderType }[],
   // Explicit allow any types as this is a dynamic list of data
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[],
   colors?: ColorsResponse[],
   cameraEnabled?: boolean,
+  defaultSortKey?: string,
 }>();
+
+onMounted(() => {
+  if(props.defaultSortKey) {
+    sortData(props.defaultSortKey, true);
+  }
+  sortedData.value = props.data;
+});
+
+function sortData(key: string, automatic = false) {
+  if(!props.tableHeaders || !sortedData.value) { return; }
+  const header = props.tableHeaders.find(h => h.key === key);
+  if(!header) { return ;}
+  if(noSortKeys.includes(header.type)) { return; }
+  if(currentSortKey.value === key && !automatic) {
+    sortDirection.value = sortDirection.value === 'UP' ? 'DOWN' : 'UP';
+    sortedData.value.reverse();
+    return;
+  }
+  currentSortKey.value = key;
+  sortDirection.value = 'DOWN';
+  sortedData.value.sort((a, b) => {
+    if(a[key] < b[key]) {return -1;}
+    if(a[key] > b[key]) {return 1;}
+    return 0;
+  });
+}
 
 defineEmits<{
   openContactModal: [id: string],
@@ -122,6 +184,13 @@ defineEmits<{
   updateColor: [id: string, colorId: string],
   pictureClick: [id: string],
 }>();
+
+watch(() => props.data, () => {
+  sortedData.value = props.data;
+  if(currentSortKey.value) {
+    sortData(currentSortKey.value, true);
+  }
+});
 </script>
 
 <script lang="ts">
