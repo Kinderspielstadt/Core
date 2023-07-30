@@ -1,9 +1,17 @@
 
 import { RecordSubscription, UnsubscribeFunc } from 'pocketbase';
-import { AccountsDataResponse, AccountsListResponse, AccountsResponse, Collections } from '../types/pocketbase.types';
+import {
+  AccountsDataRecord,
+  AccountsDataResponse,
+  AccountsListResponse,
+  AccountsRecord,
+  AccountsResponse,
+  Collections,
+} from '../types/pocketbase.types';
 import { PocketbaseService } from './pocketbase.service';
 
 const COLLECTION = PocketbaseService.getApi().collection(Collections.Accounts);
+const COLLECTION_DATA = PocketbaseService.getApi().collection(Collections.AccountsData);
 const VIEW = PocketbaseService.getApi().collection(Collections.AccountsList);
 
 export class AccountService {
@@ -17,6 +25,9 @@ export class AccountService {
   public static async getAccounts(): Promise<AccountsListResponse<number, string>[]> {
     return VIEW.getFullList();
   }
+  public static async getFullAccounts(): Promise<AccountsResponse<{personalData: AccountsDataResponse}>[]> {
+    return COLLECTION.getFullList({ expand: 'personalData' });
+  }
   public static getAccountDetails(id: string): Promise<AccountsResponse<{personalData: AccountsDataResponse}>> {
     return COLLECTION.getOne(id, { expand: 'personalData' });
   }
@@ -28,6 +39,11 @@ export class AccountService {
   }
   public static async updatePicture(accountId: string, data: FormData): Promise<AccountsResponse> {
     return COLLECTION.update(accountId, data);
+  }
+  public static async addAccount(account: AccountsRecord, personalData: AccountsDataRecord): Promise<AccountsResponse> {
+    const personalDataResponse = await COLLECTION_DATA.create(personalData, { $autoCancel: false });
+    account.personalData = personalDataResponse.id;
+    return COLLECTION.create(account, { $cancelKey: personalDataResponse.id });
   }
   public static async subscribeToAccountChanges(
     callback: (data: RecordSubscription<AccountsResponse>)=> void,

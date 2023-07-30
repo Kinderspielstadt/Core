@@ -7,6 +7,7 @@ export enum Collections {
 	AccountsData = "accountsData",
 	AccountsList = "accountsList",
 	Colors = "colors",
+	Settings = "settings",
 	Transactions = "transactions",
 }
 
@@ -45,14 +46,14 @@ export type AccountsRecord = {
 }
 
 export type AccountsDataRecord = {
-	birthday: IsoDateString
-	email: string
-	firstNameParent: string
-	lastNameParent: string
-	street: string
-	zipCode: number
-	city: string
-	phone: string
+	birthday?: IsoDateString
+	email?: string
+	firstNameParent?: string
+	lastNameParent?: string
+	street?: string
+	zipCode?: number
+	city?: string
+	phone?: string
 	intolerances?: string
 	vegetarian?: boolean
 	oneweek?: boolean
@@ -72,6 +73,10 @@ export type ColorsRecord = {
 	hex: string
 }
 
+export type SettingsRecord = {
+	radioUrl?: string
+}
+
 export type TransactionsRecord = {
 	account: RecordIdString
 	label: string
@@ -83,6 +88,7 @@ export type AccountsResponse<Texpand = unknown> = Required<AccountsRecord> & Bas
 export type AccountsDataResponse<Texpand = unknown> = Required<AccountsDataRecord> & BaseSystemFields<Texpand>
 export type AccountsListResponse<Tbalance = unknown, Tname = unknown, Texpand = unknown> = Required<AccountsListRecord<Tbalance, Tname>> & BaseSystemFields<Texpand>
 export type ColorsResponse<Texpand = unknown> = Required<ColorsRecord> & BaseSystemFields<Texpand>
+export type SettingsResponse<Texpand = unknown> = Required<SettingsRecord> & BaseSystemFields<Texpand>
 export type TransactionsResponse<Texpand = unknown> = Required<TransactionsRecord> & BaseSystemFields<Texpand>
 
 // Types containing all Records and Responses, useful for creating typing helper functions
@@ -92,6 +98,7 @@ export type CollectionRecords = {
 	accountsData: AccountsDataRecord
 	accountsList: AccountsListRecord
 	colors: ColorsRecord
+	settings: SettingsRecord
 	transactions: TransactionsRecord
 }
 
@@ -100,5 +107,6 @@ export type CollectionResponses = {
 	accountsData: AccountsDataResponse
 	accountsList: AccountsListResponse
 	colors: ColorsResponse
+	settings: SettingsResponse
 	transactions: TransactionsResponse
 }

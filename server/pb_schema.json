@@ -82,235 +82,6 @@
     "options": {}
   },
   {
-    "id": "p0gixtx6jwria0d",
-    "name": "accountsData",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "6ubgbgeq",
-        "name": "birthday",
-        "type": "date",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "r8rs5y2b",
-        "name": "email",
-        "type": "email",
-        "system": false,
-        "required": true,
-        "options": {
-          "exceptDomains": null,
-          "onlyDomains": null
-        }
-      },
-      {
-        "id": "uu9474bx",
-        "name": "firstNameParent",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "xmqazgjl",
-        "name": "lastNameParent",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "atylx3pk",
-        "name": "street",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "1ocem7g7",
-        "name": "zipCode",
-        "type": "number",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null
-        }
-      },
-      {
-        "id": "73do7uq3",
-        "name": "city",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "ktjkhpmz",
-        "name": "phone",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "gvxgpwoy",
-        "name": "intolerances",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "b0pbmkzu",
-        "name": "vegetarian",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "3daruq8m",
-        "name": "oneweek",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      }
-    ],
-    "indexes": [],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {}
-  },
-  {
-    "id": "c3zz98wpbn7m6zw",
-    "name": "accountsList",
-    "type": "view",
-    "system": false,
-    "schema": [
-      {
-        "id": "0isywenj",
-        "name": "accountNumber",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "yw8uzp4n",
-        "name": "picture",
-        "type": "file",
-        "system": false,
-        "required": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/png",
-            "image/jpeg"
-          ],
-          "thumbs": [],
-          "protected": false
-        }
-      },
-      {
-        "id": "kysoolf8",
-        "name": "name",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "dst9c5ml",
-        "name": "color",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": 7,
-          "max": 7,
-          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
-        }
-      },
-      {
-        "id": "jffwqqy9",
-        "name": "lastCheckIn",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "6iuqm7ug",
-        "name": "balance",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "brwz2pht",
-        "name": "vegetarian",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      }
-    ],
-    "indexes": [],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {
-      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id"
-    }
-  },
-  {
     "id": "74ftooxenpeq14b",
     "name": "accounts",
     "type": "base",
@@ -341,7 +112,10 @@
             "image/png",
             "image/jpeg"
           ],
-          "thumbs": [],
+          "thumbs": [
+            "80x80",
+            "512x512"
+          ],
           "protected": false
         }
       },
@@ -420,6 +194,264 @@
     "viewRule": null,
     "createRule": null,
     "updateRule": "@request.data.id = null && @request.data.accountNumber = null && @request.data.firstName = null && @request.data.lastName = null && @request.data.created = null && @request.data.updated = null",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "c3zz98wpbn7m6zw",
+    "name": "accountsList",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "id": "pcjuzle3",
+        "name": "accountNumber",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "t4787wiz",
+        "name": "picture",
+        "type": "file",
+        "system": false,
+        "required": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg"
+          ],
+          "thumbs": [
+            "80x80",
+            "512x512"
+          ],
+          "protected": false
+        }
+      },
+      {
+        "id": "ahtfg6qz",
+        "name": "name",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "yory6rrf",
+        "name": "color",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": 7,
+          "max": 7,
+          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
+        }
+      },
+      {
+        "id": "lr5kc7jq",
+        "name": "lastCheckIn",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "ulmevjb4",
+        "name": "balance",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "0feai4yj",
+        "name": "vegetarian",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id"
+    }
+  },
+  {
+    "id": "1sk211omgpn4s45",
+    "name": "settings",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "uooqle8q",
+        "name": "radioUrl",
+        "type": "url",
+        "system": false,
+        "required": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "p0gixtx6jwria0d",
+    "name": "accountsData",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "6ubgbgeq",
+        "name": "birthday",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "id": "r8rs5y2b",
+        "name": "email",
+        "type": "email",
+        "system": false,
+        "required": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "id": "uu9474bx",
+        "name": "firstNameParent",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "xmqazgjl",
+        "name": "lastNameParent",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "atylx3pk",
+        "name": "street",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "1ocem7g7",
+        "name": "zipCode",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "73do7uq3",
+        "name": "city",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "ktjkhpmz",
+        "name": "phone",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "gvxgpwoy",
+        "name": "intolerances",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "b0pbmkzu",
+        "name": "vegetarian",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      },
+      {
+        "id": "3daruq8m",
+        "name": "oneweek",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
     "deleteRule": null,
     "options": {}
   }

@@ -1,11 +1,19 @@
 <template>
   <div
     v-if="account"
-    class="hero-content flex-col pt-0 text-center lg:p-6"
+    class="hero-content flex-col gap-4 pt-0 text-center lg:p-6"
   >
-    <h1 class="mt-5 text-8xl">{{ CurrencyService.toString(getBalance()) }}</h1>
-    <h3 class="mt-10 text-5xl font-bold">{{ `${account.firstName} ${account.lastName}` }}</h3>
-    <h4 class="mb-10 text-4xl">{{ account.accountNumber }}</h4>
+    <div class="flex items-center gap-8">
+      <img
+        :src="FileService.getAvatar(account.id, account.picture)"
+        class="h-64 w-64 rounded-lg"
+      />
+      <div class="flex flex-col items-start gap-4">
+        <h3 class="text-left text-5xl font-bold">{{ `${account.firstName} ${account.lastName}` }}</h3>
+        <h4 class="text-4xl"><CreditCardIcon class="mr-4 inline h-10 w-10" /> {{ account.accountNumber }}</h4>
+        <h1 class="text-4xl"><BanknotesIcon class="mr-4 inline h-10 w-10" /> {{ CurrencyService.toString(getBalance()) }}</h1>
+      </div>
+    </div>
     <MoleculeTransactionTable
       v-if="transactions"
       class="mb-24 max-w-[42rem]"
@@ -84,7 +92,8 @@ import { AccountsResponse, TransactionsResponse } from '../../types/pocketbase.t
 import { AccountService } from '../../services/account.service';
 import { BankService, TransactionType } from '../../services/bank.service';
 import { CurrencyService } from '../../services/currency.service';
-import { CurrencyDollarIcon, ChevronDownIcon, ChevronUpIcon, XCircleIcon } from '@heroicons/vue/24/outline';
+import { FileService } from '../../services/file.service';
+import { CurrencyDollarIcon, ChevronDownIcon, ChevronUpIcon, XCircleIcon, CreditCardIcon, BanknotesIcon } from '@heroicons/vue/24/outline';
 import AtomHeroText from '../atoms/AtomHeroText.vue';
 import MoleculeInputModal from '../molecules/MoleculeInputModal.vue';
 import MoleculeTransactionTable from '../molecules/MoleculeTransactionTable.vue';

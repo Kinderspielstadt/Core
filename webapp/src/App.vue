@@ -40,7 +40,6 @@ const navigationEntries: INavigationEntry[] = [
     name: 'Radio',
     icon: MusicalNoteIcon,
     to: '/radio',
-    disabled: true,
   },
   {
     name: 'Einstellungen',

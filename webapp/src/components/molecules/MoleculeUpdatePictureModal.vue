@@ -73,9 +73,15 @@ const { videoInputs: cameras } = useDevicesList({
 
 const video = ref<HTMLVideoElement>();
 const { stream, enabled } = useUserMedia({
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  constraints: { video: { deviceId: currentCamera } },
+  constraints: { video: {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    deviceId: currentCamera,
+    width: 1920,
+    height: 1080,
+    // aspectRatio: 1, // TODO: Fix aspect ratio
+    frameRate: 30,
+  } },
 });
 
 watchEffect(() => {
@@ -89,13 +95,13 @@ async function screenshot() {
   canvas.width = video.value!.videoWidth;
   canvas.height = video.value!.videoHeight;
   canvas.getContext('2d')?.drawImage(video.value!, 0, 0);
-  const image = atob(canvas.toDataURL('image/jpg').split(',')[1]);
+  const image = atob(canvas.toDataURL('image/png').split(',')[1]);
   const array = new Uint8Array(image.length);
   for(let i = 0; i < image.length; i++) {
     array[i] = image.charCodeAt(i);
   }
   const formData = new FormData();
-  formData.append('picture', new File([array], 'picture.jpg', { type: 'image/jpg' }));
+  formData.append('picture', new File([array], 'picture.png', { type: 'image/png' }));
   await AccountService.updatePicture(accountId.value, formData);
   modal.value?.close();
   videoPaused.value = false;
