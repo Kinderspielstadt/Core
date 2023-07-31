@@ -113,6 +113,7 @@ import { ref, onMounted } from 'vue';
 import { AccountService } from '../../services/account.service';
 import { DateService } from '../../services/date.service';
 import { AuthService } from '../../services/auth.service';
+import { FileService } from '../../services/file.service';
 import { SettingsService } from '../../services/settings.service';
 import {
   ArrowDownTrayIcon,
@@ -156,8 +157,8 @@ async function saveSettings() {
 }
 
 async function genrateCardCSV() {
-  const data = await AccountService.getFullAccounts();
-  const csv = 'Vorname;Nachname;Geburtsdatum;Farbgruppe;Bild\n' +
+  const data = await AccountService.getFullAccountsWherePictureIsSet();
+  const csv = 'Vorname;Nachname;Geburtsdatum;Farbgruppe;@Bild\n' +
   data.map(account => `${
     account.firstName
   };${
@@ -172,6 +173,8 @@ async function genrateCardCSV() {
   const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
   const url = window.URL.createObjectURL(new Blob([BOM, csv], { type: 'text/csv;charset=UTF-8' }));
   window.location.assign(url);
+  const zip = await FileService.getAvatarsAsZip(data);
+  window.location.assign(window.URL.createObjectURL(zip));
 }
 
 async function importAccounts(file: File): Promise<void> {

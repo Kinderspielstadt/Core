@@ -28,6 +28,9 @@ export class AccountService {
   public static async getFullAccounts(): Promise<AccountsResponse<{personalData: AccountsDataResponse}>[]> {
     return COLLECTION.getFullList({ expand: 'personalData' });
   }
+  public static async getFullAccountsWherePictureIsSet(): Promise<AccountsResponse<{personalData: AccountsDataResponse}>[]> {
+    return COLLECTION.getFullList({ filter: 'picture!=null', expand: 'personalData' });
+  }
   public static getAccountDetails(id: string): Promise<AccountsResponse<{personalData: AccountsDataResponse}>> {
     return COLLECTION.getOne(id, { expand: 'personalData' });
   }
