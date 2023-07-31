@@ -110,6 +110,8 @@
 <script lang="ts" setup>
 import { useEventBus } from '@vueuse/core';
 import { ref, onMounted } from 'vue';
+import { AccountService } from '../../services/account.service';
+import { DateService } from '../../services/date.service';
 import { AuthService } from '../../services/auth.service';
 import { SettingsService } from '../../services/settings.service';
 import {
@@ -125,8 +127,6 @@ import AtomCard from '../atoms/AtomCard.vue';
 import AtomInput from '../atoms/AtomInput.vue';
 import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
 import MoleculeImportDataModal from '../molecules/MoleculeImportDataModal.vue';
-import { AccountService } from '../../services/account.service';
-import { DateService } from '../../services/date.service';
 
 const isAuthenticated = ref(false);
 const importAccountsModal = ref<InstanceType<typeof MoleculeImportDataModal>>();
@@ -169,7 +169,8 @@ async function genrateCardCSV() {
   };${
     account.picture
   }`).join('\n');
-  const url = window.URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
+  const BOM = new Uint8Array([0xEF, 0xBB, 0xBF]);
+  const url = window.URL.createObjectURL(new Blob([BOM, csv], { type: 'text/csv;charset=UTF-8' }));
   window.location.assign(url);
 }
 
