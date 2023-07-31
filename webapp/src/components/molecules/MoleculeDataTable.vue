@@ -170,12 +170,17 @@ function sortData(key: string, automatic = false) {
     return;
   }
   currentSortKey.value = key;
-  sortDirection.value = 'DOWN';
+  if(!automatic) {
+    sortDirection.value = 'DOWN';
+  }
   sortedData.value.sort((a, b) => {
     if(a[key] < b[key]) {return -1;}
     if(a[key] > b[key]) {return 1;}
     return 0;
   });
+  if(automatic && sortDirection.value === 'UP') {
+    sortedData.value.reverse();
+  }
 }
 
 defineEmits<{
