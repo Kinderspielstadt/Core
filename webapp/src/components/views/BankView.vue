@@ -175,6 +175,7 @@ function getBalance(): number {
 
 async function handleDeposit(amount: string) {
   const amountNumber = parseInt(amount);
+  if(amountNumber > 1000) { return; }
   if(!isNaN(amountNumber) && account.value) {
     await BankService.addTransaction(account.value.id, amountNumber, TransactionType.DEPOSIT);
   }
@@ -182,6 +183,7 @@ async function handleDeposit(amount: string) {
 
 async function handleSalary(amount: string) {
   const amountNumber = parseInt(amount);
+  if(amountNumber > 1000) { return; }
   if(!isNaN(amountNumber) && account.value) {
     await BankService.addTransaction(account.value.id, amountNumber, TransactionType.SALARY);
   }
@@ -189,6 +191,7 @@ async function handleSalary(amount: string) {
 
 async function handleWithdraw(amount: string) {
   const amountNumber = parseInt(amount);
+  if(amountNumber > 1000) { return; }
   if(!isNaN(amountNumber) && account.value) {
     await BankService.addTransaction(account.value.id, -amountNumber, TransactionType.WITHDRAW);
   }
