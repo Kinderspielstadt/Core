@@ -52,6 +52,13 @@
           </RouterLink>
           <RouterLink
             class="btn"
+            :to="{ name: 'pollsResult' }"
+          >
+            <TrophyIcon class="h-5 w-5" />
+            Abstimmungsergebnisse
+          </RouterLink>
+          <RouterLink
+            class="btn"
             :to="{ name: 'admin' }"
           >
             <StarIcon class="h-5 w-5" />
@@ -121,6 +128,7 @@ import {
   MagnifyingGlassIcon,
   StarIcon,
   TableCellsIcon,
+  TrophyIcon,
   UsersIcon,
   WrenchScrewdriverIcon,
 } from '@heroicons/vue/24/outline';

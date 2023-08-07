@@ -7,6 +7,7 @@ export enum Collections {
 	AccountsData = "accountsData",
 	AccountsList = "accountsList",
 	Colors = "colors",
+	Polls = "polls",
 	Settings = "settings",
 	Transactions = "transactions",
 }
@@ -73,6 +74,17 @@ export type ColorsRecord = {
 	hex: string
 }
 
+export enum PollsOptionOptions {
+	"A" = "A",
+	"B" = "B",
+	"C" = "C",
+	"D" = "D",
+}
+export type PollsRecord = {
+	accountNumber: string
+	option: PollsOptionOptions
+}
+
 export type SettingsRecord = {
 	radioUrl?: string
 }
@@ -88,6 +100,7 @@ export type AccountsResponse<Texpand = unknown> = Required<AccountsRecord> & Bas
 export type AccountsDataResponse<Texpand = unknown> = Required<AccountsDataRecord> & BaseSystemFields<Texpand>
 export type AccountsListResponse<Tbalance = unknown, Tname = unknown, Texpand = unknown> = Required<AccountsListRecord<Tbalance, Tname>> & BaseSystemFields<Texpand>
 export type ColorsResponse<Texpand = unknown> = Required<ColorsRecord> & BaseSystemFields<Texpand>
+export type PollsResponse<Texpand = unknown> = Required<PollsRecord> & BaseSystemFields<Texpand>
 export type SettingsResponse<Texpand = unknown> = Required<SettingsRecord> & BaseSystemFields<Texpand>
 export type TransactionsResponse<Texpand = unknown> = Required<TransactionsRecord> & BaseSystemFields<Texpand>
 
@@ -98,6 +111,7 @@ export type CollectionRecords = {
 	accountsData: AccountsDataRecord
 	accountsList: AccountsListRecord
 	colors: ColorsRecord
+	polls: PollsRecord
 	settings: SettingsRecord
 	transactions: TransactionsRecord
 }
@@ -107,6 +121,7 @@ export type CollectionResponses = {
 	accountsData: AccountsDataResponse
 	accountsList: AccountsListResponse
 	colors: ColorsResponse
+	polls: PollsResponse
 	settings: SettingsResponse
 	transactions: TransactionsResponse
 }

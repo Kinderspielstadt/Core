@@ -456,5 +456,50 @@
     "options": {
       "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id\nORDER BY\n  name"
     }
+  },
+  {
+    "id": "z4nymnjstxpso9y",
+    "name": "polls",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "vtvp3m5v",
+        "name": "accountNumber",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "rir4kj6w",
+        "name": "option",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "options": {
+          "maxSelect": 1,
+          "values": [
+            "A",
+            "B",
+            "C",
+            "D"
+          ]
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_95A5FBt` ON `polls` (`accountNumber`)"
+    ],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
   }
 ]

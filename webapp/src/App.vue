@@ -15,6 +15,7 @@ import {
   MusicalNoteIcon,
   ArrowTrendingUpIcon,
   AdjustmentsHorizontalIcon,
+  BoltIcon,
 } from '@heroicons/vue/24/outline';
 import MoleculeNavigationDrawer from './components/molecules/MoleculeNavigationDrawer.vue';
 
@@ -40,6 +41,11 @@ const navigationEntries: INavigationEntry[] = [
     name: 'Radio',
     icon: MusicalNoteIcon,
     to: '/radio',
+  },
+  {
+    name: 'Abstimmungen',
+    icon: BoltIcon,
+    to: '/polls',
   },
   {
     name: 'Einstellungen',

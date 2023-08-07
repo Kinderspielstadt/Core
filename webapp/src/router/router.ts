@@ -4,6 +4,8 @@ import BankView from '../components/views/BankView.vue';
 import StocksView from '../components/views/StocksView.vue';
 import RadioView from '../components/views/RadioView.vue';
 import SettingsView from '../components/views/SettingsView.vue';
+import PollsView from '../components/views/PollsView.vue';
+import PollsResultView from '../components/views/PollsResultView.vue';
 import DataView from '../components/views/DataView.vue';
 import AdminView from '../components/views/AdminView.vue';
 
@@ -39,9 +41,14 @@ const routes = [
     component: SettingsView,
   },
   {
-    path: '/settings',
-    name: 'settings',
-    component: SettingsView,
+    path: '/polls',
+    name: 'polls',
+    component: PollsView,
+  },
+  {
+    path: '/polls/results',
+    name: 'pollsResult',
+    component: PollsResultView,
   },
   {
     path: '/admin',
