@@ -32,8 +32,11 @@
         </button>
       </div>
     </div>
-    <div v-else>
-      Option: {{ option }}
+    <div
+      v-else
+      class="text-[16rem]"
+    >
+      {{ option }}
     </div>
     <div
       v-if="error"
