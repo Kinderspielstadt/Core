@@ -31,7 +31,7 @@ async function handleAuth() {
         required
       />
       <button class="btn btn-primary gap-2 self-end">
-        <ArrowRightStartOnRectangleIcon class="h-6 w-6" />
+        <ArrowRightStartOnRectangleIcon class="size-6" />
         Login
       </button>
     </form>

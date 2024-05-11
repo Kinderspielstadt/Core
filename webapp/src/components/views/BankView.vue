@@ -202,25 +202,25 @@ onUnmounted(() => {
       <div class="flex items-center gap-8">
         <img
           :src="FileService.getAvatar(account.id, account.picture)"
-          class="h-64 w-64 rounded-lg"
+          class="size-64 rounded-lg"
         />
         <div class="flex flex-col items-start gap-4">
           <h3 class="text-left text-5xl font-bold">
             {{ `${account.firstName} ${account.lastName}` }}
           </h3>
           <h4 class="text-4xl">
-            <CreditCardIcon class="mr-4 inline h-10 w-10" />
+            <CreditCardIcon class="mr-4 inline size-10" />
             {{ account.accountNumber }}
           </h4>
           <h1 class="text-4xl">
-            <BanknotesIcon class="mr-4 inline h-10 w-10" />
+            <BanknotesIcon class="mr-4 inline size-10" />
             {{ CurrencyService.toString(getBalance()) }}
           </h1>
         </div>
       </div>
       <MoleculeTransactionTable
         v-if="transactions"
-        class="mb-24 max-w-[42rem]"
+        class="mb-24 max-w-2xl"
         :balance="getBalance()"
         :transactions="transactions"
       />
@@ -238,7 +238,7 @@ onUnmounted(() => {
         @submit="handleDeposit"
       />
       <button class="btn gap-2" @click="() => depositModal?.show()">
-        <ChevronUpIcon class="h-6 w-6 text-success" />
+        <ChevronUpIcon class="size-6 text-success" />
         Einzahlen
       </button>
       <MoleculeInputModal
@@ -250,7 +250,7 @@ onUnmounted(() => {
         @submit="handleSalary"
       />
       <button class="btn gap-2" @click="() => salaryModal?.show()">
-        <CurrencyDollarIcon class="h-6 w-6 text-warning" />
+        <CurrencyDollarIcon class="size-6 text-warning" />
         Gehalt
       </button>
       <MoleculeInputModal
@@ -262,14 +262,14 @@ onUnmounted(() => {
         @submit="handleWithdraw"
       />
       <button class="btn gap-2" @click="() => withdrawModal?.show()">
-        <ChevronDownIcon class="h-6 w-6 text-error" />
+        <ChevronDownIcon class="size-6 text-error" />
         Auszahlen
       </button>
     </div>
     <AtomHeroText v-else>
       Bitte Karte scannen...
       <div v-if="error" class="alert alert-error mt-6 shadow-lg">
-        <XCircleIcon class="h-6 w-6" />
+        <XCircleIcon class="size-6" />
         <span class="text-base font-normal"><b>Fehler: </b>{{ error }}</span>
       </div>
     </AtomHeroText>

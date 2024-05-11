@@ -20,7 +20,7 @@ defineProps({
 <template>
   <label class="swap swap-rotate">
     <input type="checkbox" :checked="checked" />
-    <component :is="onIcon" class="swap-on h-6 w-6" />
-    <component :is="offIcon" class="swap-off h-6 w-6" />
+    <component :is="onIcon" class="swap-on size-6" />
+    <component :is="offIcon" class="swap-off size-6" />
   </label>
 </template>

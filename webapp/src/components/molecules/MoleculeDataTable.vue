@@ -127,15 +127,15 @@ export enum TableHeaderType {
               {{ header.title }}
               <BarsArrowDownIcon
                 v-if="header.key === currentSortKey && sortDirection === 'DOWN'"
-                class="h-4 w-4"
+                class="size-4"
               />
               <BarsArrowUpIcon
                 v-else-if="
                   header.key === currentSortKey && sortDirection === 'UP'
                 "
-                class="h-4 w-4"
+                class="size-4"
               />
-              <div v-else class="h-4 w-4" />
+              <div v-else class="size-4" />
             </div>
           </th>
         </tr>
@@ -167,13 +167,13 @@ export enum TableHeaderType {
               <img
                 v-if="entry[header.key]"
                 :src="FileService.getSmallAvatar(entry.id, entry[header.key])"
-                class="m-auto h-10 w-10 rounded-full"
+                class="m-auto size-10 rounded-full"
               />
               <div
                 v-else
-                class="m-auto flex h-10 w-10 items-center justify-center rounded-full border border-base-content"
+                class="m-auto flex size-10 items-center justify-center rounded-full border border-base-content"
               >
-                <XMarkIcon class="h-7 w-7" />
+                <XMarkIcon class="size-7" />
               </div>
             </span>
             <span v-else-if="header.type === TableHeaderType.COLOR">
@@ -217,7 +217,7 @@ export enum TableHeaderType {
                 class="tooltip tooltip-left normal-case"
                 data-tip="Kontonummer ändern"
               >
-                <CreditCardIcon class="h-6 w-6" />
+                <CreditCardIcon class="size-6" />
               </div>
             </button>
             <button
@@ -225,14 +225,14 @@ export enum TableHeaderType {
               class="btn btn-ghost btn-sm p-1"
               @click="$emit('openContactModal', entry.id)"
             >
-              <DocumentTextIcon class="h-6 w-6" />
+              <DocumentTextIcon class="size-6" />
             </button>
             <RouterLink
               v-else-if="header.type === TableHeaderType.BUTTON_ACCOUNT"
               :to="`/bank?accountNumber=${entry.accountNumber}`"
               class="btn btn-ghost btn-sm p-1"
             >
-              <CurrencyDollarIcon class="h-6 w-6" />
+              <CurrencyDollarIcon class="size-6" />
             </RouterLink>
           </td>
         </tr>

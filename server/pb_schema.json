@@ -1,33 +1,18 @@
 [
   {
-    "id": "w85pgrtrmovf916",
-    "name": "transactions",
+    "id": "74ftooxenpeq14b",
+    "name": "accounts",
     "type": "base",
     "system": false,
     "schema": [
       {
-        "id": "5aeh5giq",
-        "name": "account",
-        "type": "relation",
         "system": false,
-        "required": true,
-        "options": {
-          "collectionId": "74ftooxenpeq14b",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "firstName",
-            "lastName"
-          ]
-        }
-      },
-      {
-        "id": "2bzqyeuk",
-        "name": "label",
+        "id": "as1gvc1r",
+        "name": "accountNumber",
         "type": "text",
-        "system": false,
-        "required": true,
+        "required": false,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -35,21 +20,258 @@
         }
       },
       {
-        "id": "zsx9i8w7",
-        "name": "amount",
-        "type": "number",
         "system": false,
+        "id": "a19ww3ll",
+        "name": "picture",
+        "type": "file",
         "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": ["image/png", "image/jpeg"],
+          "thumbs": ["80x80", "512x512", "1920x1080"],
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "vxeq20lk",
+        "name": "firstName",
+        "type": "text",
+        "required": true,
+        "presentable": true,
+        "unique": false,
         "options": {
           "min": null,
-          "max": null
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "bsinpdk7",
+        "name": "lastName",
+        "type": "text",
+        "required": true,
+        "presentable": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "luko6fp9",
+        "name": "color",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "a5ws993a92k9e30",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["hex"]
+        }
+      },
+      {
+        "system": false,
+        "id": "syfivtki",
+        "name": "lastCheckIn",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "pkoynx7h",
+        "name": "personalData",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "p0gixtx6jwria0d",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["id"]
         }
       }
     ],
-    "indexes": [],
+    "indexes": ["CREATE INDEX `idx_mPdvrAQ` ON `accounts` (`accountNumber`)"],
     "listRule": "",
-    "viewRule": "",
-    "createRule": "",
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": "@request.data.id = null && @request.data.accountNumber = null && @request.data.firstName = null && @request.data.lastName = null && @request.data.created = null && @request.data.updated = null",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "p0gixtx6jwria0d",
+    "name": "accountsData",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "6ubgbgeq",
+        "name": "birthday",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "r8rs5y2b",
+        "name": "email",
+        "type": "email",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "uu9474bx",
+        "name": "firstNameParent",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "xmqazgjl",
+        "name": "lastNameParent",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "atylx3pk",
+        "name": "street",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "1ocem7g7",
+        "name": "zipCode",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "73do7uq3",
+        "name": "city",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "ktjkhpmz",
+        "name": "phone",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "gvxgpwoy",
+        "name": "intolerances",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "b0pbmkzu",
+        "name": "vegetarian",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "system": false,
+        "id": "3daruq8m",
+        "name": "oneweek",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
     "updateRule": null,
     "deleteRule": null,
     "options": {}
@@ -61,11 +283,13 @@
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "xtditwzx",
         "name": "hex",
         "type": "text",
-        "system": false,
         "required": true,
+        "presentable": true,
+        "unique": false,
         "options": {
           "min": 7,
           "max": 7,
@@ -80,382 +304,6 @@
     "updateRule": null,
     "deleteRule": null,
     "options": {}
-  },
-  {
-    "id": "1sk211omgpn4s45",
-    "name": "settings",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "uooqle8q",
-        "name": "radioUrl",
-        "type": "url",
-        "system": false,
-        "required": false,
-        "options": {
-          "exceptDomains": null,
-          "onlyDomains": null
-        }
-      }
-    ],
-    "indexes": [],
-    "listRule": "",
-    "viewRule": "",
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {}
-  },
-  {
-    "id": "p0gixtx6jwria0d",
-    "name": "accountsData",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "6ubgbgeq",
-        "name": "birthday",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "r8rs5y2b",
-        "name": "email",
-        "type": "email",
-        "system": false,
-        "required": false,
-        "options": {
-          "exceptDomains": null,
-          "onlyDomains": null
-        }
-      },
-      {
-        "id": "uu9474bx",
-        "name": "firstNameParent",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "xmqazgjl",
-        "name": "lastNameParent",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "atylx3pk",
-        "name": "street",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "1ocem7g7",
-        "name": "zipCode",
-        "type": "number",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null
-        }
-      },
-      {
-        "id": "73do7uq3",
-        "name": "city",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "ktjkhpmz",
-        "name": "phone",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "gvxgpwoy",
-        "name": "intolerances",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "b0pbmkzu",
-        "name": "vegetarian",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "3daruq8m",
-        "name": "oneweek",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      }
-    ],
-    "indexes": [],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {}
-  },
-  {
-    "id": "74ftooxenpeq14b",
-    "name": "accounts",
-    "type": "base",
-    "system": false,
-    "schema": [
-      {
-        "id": "as1gvc1r",
-        "name": "accountNumber",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "a19ww3ll",
-        "name": "picture",
-        "type": "file",
-        "system": false,
-        "required": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/png",
-            "image/jpeg"
-          ],
-          "thumbs": [
-            "80x80",
-            "512x512",
-            "1920x1080"
-          ],
-          "protected": false
-        }
-      },
-      {
-        "id": "vxeq20lk",
-        "name": "firstName",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "bsinpdk7",
-        "name": "lastName",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "luko6fp9",
-        "name": "color",
-        "type": "relation",
-        "system": false,
-        "required": false,
-        "options": {
-          "collectionId": "a5ws993a92k9e30",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "hex"
-          ]
-        }
-      },
-      {
-        "id": "syfivtki",
-        "name": "lastCheckIn",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "pkoynx7h",
-        "name": "personalData",
-        "type": "relation",
-        "system": false,
-        "required": false,
-        "options": {
-          "collectionId": "p0gixtx6jwria0d",
-          "cascadeDelete": false,
-          "minSelect": null,
-          "maxSelect": 1,
-          "displayFields": [
-            "id"
-          ]
-        }
-      }
-    ],
-    "indexes": [
-      "CREATE INDEX `idx_mPdvrAQ` ON `accounts` (`accountNumber`)"
-    ],
-    "listRule": "",
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": "@request.data.id = null && @request.data.accountNumber = null && @request.data.firstName = null && @request.data.lastName = null && @request.data.created = null && @request.data.updated = null",
-    "deleteRule": null,
-    "options": {}
-  },
-  {
-    "id": "c3zz98wpbn7m6zw",
-    "name": "accountsList",
-    "type": "view",
-    "system": false,
-    "schema": [
-      {
-        "id": "xnkxs4uc",
-        "name": "accountNumber",
-        "type": "text",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": null,
-          "max": null,
-          "pattern": ""
-        }
-      },
-      {
-        "id": "fhsy4mft",
-        "name": "picture",
-        "type": "file",
-        "system": false,
-        "required": false,
-        "options": {
-          "maxSelect": 1,
-          "maxSize": 5242880,
-          "mimeTypes": [
-            "image/png",
-            "image/jpeg"
-          ],
-          "thumbs": [
-            "80x80",
-            "512x512",
-            "1920x1080"
-          ],
-          "protected": false
-        }
-      },
-      {
-        "id": "crdb1nkh",
-        "name": "name",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "vgskmmja",
-        "name": "color",
-        "type": "text",
-        "system": false,
-        "required": true,
-        "options": {
-          "min": 7,
-          "max": 7,
-          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
-        }
-      },
-      {
-        "id": "11irjyet",
-        "name": "lastCheckIn",
-        "type": "date",
-        "system": false,
-        "required": false,
-        "options": {
-          "min": "",
-          "max": ""
-        }
-      },
-      {
-        "id": "wnste0di",
-        "name": "balance",
-        "type": "json",
-        "system": false,
-        "required": false,
-        "options": {}
-      },
-      {
-        "id": "hag8ze3k",
-        "name": "vegetarian",
-        "type": "bool",
-        "system": false,
-        "required": false,
-        "options": {}
-      }
-    ],
-    "indexes": [],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
-    "updateRule": null,
-    "deleteRule": null,
-    "options": {
-      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id\nORDER BY\n  name"
-    }
   },
   {
     "id": "z4nymnjstxpso9y",
@@ -464,11 +312,13 @@
     "system": false,
     "schema": [
       {
+        "system": false,
         "id": "vtvp3m5v",
         "name": "accountNumber",
         "type": "text",
-        "system": false,
         "required": true,
+        "presentable": false,
+        "unique": false,
         "options": {
           "min": null,
           "max": null,
@@ -476,19 +326,16 @@
         }
       },
       {
+        "system": false,
         "id": "rir4kj6w",
         "name": "option",
         "type": "select",
-        "system": false,
         "required": true,
+        "presentable": false,
+        "unique": false,
         "options": {
           "maxSelect": 1,
-          "values": [
-            "A",
-            "B",
-            "C",
-            "D"
-          ]
+          "values": ["A", "B", "C", "D"]
         }
       }
     ],
@@ -501,5 +348,200 @@
     "updateRule": null,
     "deleteRule": null,
     "options": {}
+  },
+  {
+    "id": "1sk211omgpn4s45",
+    "name": "settings",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "uooqle8q",
+        "name": "radioUrl",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "w85pgrtrmovf916",
+    "name": "transactions",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "5aeh5giq",
+        "name": "account",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "74ftooxenpeq14b",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["firstName", "lastName"]
+        }
+      },
+      {
+        "system": false,
+        "id": "2bzqyeuk",
+        "name": "label",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "zsx9i8w7",
+        "name": "amount",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "c3zz98wpbn7m6zw",
+    "name": "accountsList",
+    "type": "view",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "j2dpcsmy",
+        "name": "accountNumber",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "xoen7kan",
+        "name": "picture",
+        "type": "file",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "mimeTypes": ["image/png", "image/jpeg"],
+          "thumbs": ["80x80", "512x512", "1920x1080"],
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "protected": false
+        }
+      },
+      {
+        "system": false,
+        "id": "b0pzgono",
+        "name": "name",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "5igeel2r",
+        "name": "color",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": 7,
+          "max": 7,
+          "pattern": "^#(?:[0-9a-fA-F]{3}){1,2}$"
+        }
+      },
+      {
+        "system": false,
+        "id": "cc7g9ft8",
+        "name": "lastCheckIn",
+        "type": "date",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": "",
+          "max": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "gksdkiwr",
+        "name": "balance",
+        "type": "json",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSize": 2000000
+        }
+      },
+      {
+        "system": false,
+        "id": "manyv7bz",
+        "name": "vegetarian",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {
+      "query": "SELECT\n  a.id AS id,\n  a.accountNumber AS accountNumber,\n  a.picture AS picture,\n  (a.firstName || ' ' || a.lastName) AS name,\n  c.hex as color,\n  a.lastCheckIn AS lastCheckIn,\n  SUM(t.amount) AS balance,\n  d.vegetarian AS vegetarian\nFROM\n  accounts AS a\nLEFT JOIN\n  transactions AS t\nON\n  a.id = t.account\nLEFT JOIN\n  colors AS c\nON\n  a.color = c.id\nLEFT JOIN\n  accountsData AS d\nON\n  a.personalData = d.id\nGROUP BY\n  a.id\nORDER BY\n  name"
+    }
   }
 ]

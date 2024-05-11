@@ -65,7 +65,7 @@ router.afterEach(() => {
       <div class="navbar top-0 max-w-7xl place-self-center shadow-lg lg:hidden">
         <div class="flex-none">
           <label :for="drawerId" class="btn btn-ghost rounded-btn lg:hidden">
-            <Bars3Icon class="h-7 w-7" />
+            <Bars3Icon class="size-7" />
           </label>
           <label tabindex="0" class="avatar btn btn-ghost">
             <AtomLogo class="w-12" />
@@ -85,14 +85,14 @@ router.afterEach(() => {
             class="pointer-events-none rounded-md bg-warning uppercase text-warning-content"
           >
             <span>
-              <ExclamationTriangleIcon class="h-6 w-6" />
+              <ExclamationTriangleIcon class="size-6" />
               Admin-Modus
-              <ExclamationTriangleIcon class="h-6 w-6" />
+              <ExclamationTriangleIcon class="size-6" />
             </span>
           </li>
           <li>
             <span @click="AuthService.logout()">
-              <ArrowRightStartOnRectangleIcon class="h-6 w-6" />
+              <ArrowRightStartOnRectangleIcon class="size-6" />
               Abmelden
             </span>
           </li>
@@ -113,7 +113,7 @@ router.afterEach(() => {
             :to="navigationEntry.to"
             active-class="active"
           >
-            <component :is="navigationEntry.icon" class="h-6 w-6" />{{
+            <component :is="navigationEntry.icon" class="size-6" />{{
               navigationEntry.name
             }}
           </component>

@@ -126,7 +126,7 @@ defineExpose({
           videoPaused = true;
         "
       >
-        <CameraIcon class="h-5 w-5" />Foto
+        <CameraIcon class="size-5" />Foto
       </button>
       <div v-else class="flex gap-2">
         <button
@@ -136,10 +136,10 @@ defineExpose({
             videoPaused = false;
           "
         >
-          <ArrowPathIcon class="h-5 w-5" />Neuer Versuch
+          <ArrowPathIcon class="size-5" />Neuer Versuch
         </button>
         <button class="btn btn-primary grow" @click.prevent="screenshot">
-          <ArrowUpTrayIcon class="h-5 w-5" />Foto hochladen
+          <ArrowUpTrayIcon class="size-5" />Foto hochladen
         </button>
       </div>
     </div>

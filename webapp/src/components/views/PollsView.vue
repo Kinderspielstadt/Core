@@ -98,14 +98,14 @@ onKeyStroke(
       {{ option }}
     </div>
     <div v-if="error" class="alert alert-error mt-6 shadow-lg">
-      <XCircleIcon class="h-6 w-6" />
+      <XCircleIcon class="size-6" />
       <span class="text-base font-normal"><b>Fehler:</b> {{ error }}</span>
     </div>
     <Transition
       enter-active-class="animate__animated animate__fast animate__tada"
     >
       <div v-if="success" class="alert alert-success mt-6 shadow-lg">
-        <CheckCircleIcon class="h-6 w-6" />
+        <CheckCircleIcon class="size-6" />
         <span class="text-base font-normal">Erfolgreich abgestimmt</span>
       </div>
     </Transition>

@@ -5,6 +5,7 @@ module.exports = {
     '@vue/eslint-config-typescript',
     'plugin:vue/vue3-recommended',
     'plugin:vue-scoped-css/vue3-recommended',
+    'plugin:tailwindcss/recommended',
     // This extension disables all formatting rules that might conflict with prettier
     // Make sure it is the last element in this list, see https://eslint.vuejs.org/user-guide/#conflict-with-prettier
     '@vue/eslint-config-prettier/skip-formatting',
@@ -45,5 +46,6 @@ module.exports = {
         },
       },
     ],
+    'tailwindcss/no-custom-classname': 'off',
   },
 };

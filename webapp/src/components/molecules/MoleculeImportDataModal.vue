@@ -53,11 +53,11 @@ defineExpose({
     </div>
     <template #action>
       <label class="btn gap-2" :for="id" @click="modal?.close()">
-        <XCircleIcon class="h-6 w-6" />
+        <XCircleIcon class="size-6" />
         Abbrechen
       </label>
       <button class="btn gap-2" @click="handleSubmit()">
-        <CheckCircleIcon class="h-6 w-6" />
+        <CheckCircleIcon class="size-6" />
         {{ actionLabel }}
       </button>
     </template>

@@ -66,6 +66,9 @@ importers:
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
+      eslint-plugin-tailwindcss:
+        specifier: ^3.15.1
+        version: 3.15.1(tailwindcss@3.4.3)
       eslint-plugin-vue:
         specifier: ^9.26.0
         version: 9.26.0(eslint@8.57.0)
@@ -87,9 +90,6 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.5.14
         version: 0.5.14(prettier-plugin-organize-imports@3.2.4(prettier@3.2.5)(typescript@5.4.5))(prettier@3.2.5)
-      sass:
-        specifier: ^1.77.0
-        version: 1.77.0
       svgo:
         specifier: ^3.3.2
         version: 3.3.2
@@ -963,6 +963,12 @@ packages:
         optional: true
       eslint-config-prettier:
         optional: true
+
+  eslint-plugin-tailwindcss@3.15.1:
+    resolution: {integrity: sha512-4RXRMIaMG07C2TBEW1k0VM4+dDazz1kxcZhkK4zirvmHGZTA4jnlSO2kq5mamuSPi+Wo17dh2SlC8IyFBuCd7Q==}
+    engines: {node: '>=12.13.0'}
+    peerDependencies:
+      tailwindcss: ^3.4.0
 
   eslint-plugin-vue-scoped-css@2.8.0:
     resolution: {integrity: sha512-JXb3Um4+AhuDGxSX6FAGCI0p811xF7W8L7yxC8wmAEZEI/teTjlpC09noqQZHXn53RZ/TGQJ8Onaq4teYLxBbg==}
@@ -2874,6 +2880,12 @@ snapshots:
     optionalDependencies:
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
 
+  eslint-plugin-tailwindcss@3.15.1(tailwindcss@3.4.3):
+    dependencies:
+      fast-glob: 3.3.2
+      postcss: 8.4.38
+      tailwindcss: 3.4.3
+
   eslint-plugin-vue-scoped-css@2.8.0(eslint@8.57.0)(vue-eslint-parser@9.4.2(eslint@8.57.0)):
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
@@ -3169,7 +3181,8 @@ snapshots:
 
   immediate@3.0.6: {}
 
-  immutable@4.1.0: {}
+  immutable@4.1.0:
+    optional: true
 
   import-fresh@3.3.0:
     dependencies:
@@ -3685,7 +3698,8 @@ snapshots:
     dependencies:
       chokidar: 3.5.3
       immutable: 4.1.0
-      source-map-js: 1.0.2
+      source-map-js: 1.2.0
+    optional: true
 
   sax@1.2.4: {}
 

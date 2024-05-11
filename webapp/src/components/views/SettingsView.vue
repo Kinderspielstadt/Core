@@ -147,7 +147,7 @@ onMounted(async () => {
     >
       <AtomCard class="w-96">
         <template #title>
-          <WrenchScrewdriverIcon class="h-6 w-6" />Einstellungen
+          <WrenchScrewdriverIcon class="size-6" />Einstellungen
         </template>
         <div class="mt-4 flex h-full flex-col gap-4">
           <div class="flex flex-col gap-2">
@@ -177,19 +177,19 @@ onMounted(async () => {
       </AtomCard>
       <AtomCard class="w-96">
         <template #title>
-          <MagnifyingGlassIcon class="h-6 w-6" />Verwaltung
+          <MagnifyingGlassIcon class="size-6" />Verwaltung
         </template>
         <div class="mt-4 flex h-full flex-col gap-4">
           <RouterLink class="btn" :to="{ name: 'data' }">
-            <UsersIcon class="h-5 w-5" />
+            <UsersIcon class="size-5" />
             Stammdaten-Übersicht
           </RouterLink>
           <RouterLink class="btn" :to="{ name: 'pollsResult' }">
-            <TrophyIcon class="h-5 w-5" />
+            <TrophyIcon class="size-5" />
             Abstimmungsergebnisse
           </RouterLink>
           <RouterLink class="btn" :to="{ name: 'admin' }">
-            <StarIcon class="h-5 w-5" />
+            <StarIcon class="size-5" />
             Admin Oberfläche
           </RouterLink>
         </div>
@@ -197,7 +197,7 @@ onMounted(async () => {
       <AtomCard class="w-96 border-2 border-error">
         <template #title>
           <div class="flex items-center gap-2 text-error">
-            <ExclamationTriangleIcon class="h-6 w-6" />Danger Zone
+            <ExclamationTriangleIcon class="size-6" />Danger Zone
           </div>
         </template>
         <div class="mt-4 flex h-full flex-col gap-4">
@@ -209,11 +209,11 @@ onMounted(async () => {
             @submit="importAccounts"
           />
           <button class="btn" @click="importAccountsModal?.show()">
-            <TableCellsIcon class="h-5 w-5" />
+            <TableCellsIcon class="size-5" />
             Stammdaten importieren
           </button>
           <button class="btn" @click="genrateCardCSV">
-            <ArrowDownTrayIcon class="h-5 w-5" />
+            <ArrowDownTrayIcon class="size-5" />
             Karten CSV generieren
           </button>
         </div>

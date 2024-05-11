@@ -48,7 +48,7 @@ onKeyStroke(
   <AtomHeroText>
     {{ message }}
     <div v-if="error" class="alert alert-error mt-6 shadow-lg">
-      <XCircleIcon class="h-6 w-6" />
+      <XCircleIcon class="size-6" />
       <span class="text-base font-normal"><b>Fehler:</b> {{ error }}</span>
     </div>
   </AtomHeroText>

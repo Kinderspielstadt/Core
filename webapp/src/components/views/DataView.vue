@@ -195,11 +195,11 @@ onUnmounted(() => {
       ref="updatePictureModal"
     />
     <button
-      class="btn btn-circle btn-primary fixed bottom-4 right-4 h-14 w-14"
+      class="btn btn-circle btn-primary fixed bottom-4 right-4 size-14"
       @click="toggleCameraEnabled"
     >
-      <VideoCameraIcon v-if="cameraEnabled" class="h-8 w-8" />
-      <VideoCameraSlashIcon v-else class="h-8 w-8" />
+      <VideoCameraIcon v-if="cameraEnabled" class="size-8" />
+      <VideoCameraSlashIcon v-else class="size-8" />
     </button>
   </div>
 </template>
