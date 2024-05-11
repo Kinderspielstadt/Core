@@ -1,0 +1,98 @@
+when:
+  - event: [pull_request, tag]
+  - event: push
+    branch:
+      - ${CI_REPO_DEFAULT_BRANCH}
+
+variables:
+  - &node_image "docker.io/node:22-alpine"
+  - &cache_image "docker.io/meltwater/drone-cache:v1.4.0"
+  - &buildx_plugin "docker.io/woodpeckerci/plugin-docker-buildx:3.1.0"
+
+steps:
+  - name: ♻️ Restore Cache
+    image: *cache_image
+    settings:
+      backend: filesystem
+      restore: true
+      cache_key: volume
+      archive_format: gzip
+      mount:
+        - "webapp/node_modules"
+        - ".docker/cache"
+    volumes:
+      - /tmp/cache:/tmp/cache
+
+  - name: 📦 Install Web App
+    depends_on:
+      - ♻️ Restore Cache
+    image: *node_image
+    directory: webapp/
+    commands:
+      - corepack enable
+      - pnpm install --frozen-lockfile
+
+  - name: 🧽 Format Check Web App
+    depends_on:
+      - 📦 Install Web App
+    image: *node_image
+    directory: webapp/
+    commands:
+      - corepack enable
+      - pnpm lint
+
+  - name: 🔎 Lint Web App
+    depends_on:
+      - 🧽 Format Check Web App
+    image: *node_image
+    directory: webapp/
+    commands:
+      - corepack enable
+      - pnpm lint
+
+  - name: 🏗️ Build Web App
+    depends_on:
+      - 🔎 Lint Web App
+    image: *node_image
+    directory: webapp/
+    commands:
+      - corepack enable
+      - pnpm build
+
+  - name: 🐳 Build Server and publish
+    depends_on:
+      - 🏗️ Build Web App
+    image: *buildx_plugin
+    settings:
+      repo: git.kinderspielstadt.de/kispi/core
+      dockerfile: Dockerfile
+      tag:
+        [
+          latest,
+          "${CI_COMMIT_TAG}",
+          "${CI_COMMIT_TAG%.*}",
+          "${CI_COMMIT_TAG%%.*}",
+        ]
+      cache-from: type=local,src=.docker/cache
+      cache-to: type=local,dest=.docker/cache
+      logins:
+        - registry: https://git.kinderspielstadt.de
+          username:
+            from_secret: docker_username
+          password:
+            from_secret: docker_password
+
+  - name: 🔨 Rebuild Cache
+    depends_on:
+      - 🐳 Build Server and publish
+    image: *cache_image
+    settings:
+      backend: filesystem
+      rebuild: true
+      cache_key: volume
+      archive_format: gzip
+      mount:
+        - "webapp/node_modules"
+        - ".docker/cache"
+    volumes:
+      - /tmp/cache:/tmp/cache

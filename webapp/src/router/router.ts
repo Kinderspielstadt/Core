@@ -1,13 +1,13 @@
 import * as VueRouter from 'vue-router';
-import CheckInView from '../components/views/CheckInView.vue';
+import AdminView from '../components/views/AdminView.vue';
 import BankView from '../components/views/BankView.vue';
-import StocksView from '../components/views/StocksView.vue';
+import CheckInView from '../components/views/CheckInView.vue';
+import DataView from '../components/views/DataView.vue';
+import PollsResultView from '../components/views/PollsResultView.vue';
+import PollsView from '../components/views/PollsView.vue';
 import RadioView from '../components/views/RadioView.vue';
 import SettingsView from '../components/views/SettingsView.vue';
-import PollsView from '../components/views/PollsView.vue';
-import PollsResultView from '../components/views/PollsResultView.vue';
-import DataView from '../components/views/DataView.vue';
-import AdminView from '../components/views/AdminView.vue';
+import StocksView from '../components/views/StocksView.vue';
 
 const routes = [
   {

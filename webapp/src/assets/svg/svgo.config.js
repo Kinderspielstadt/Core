@@ -1,6 +1,3 @@
 module.exports = {
-  plugins: [
-    'preset-default',
-    'prefixIds',
-  ],
+  plugins: ['preset-default', 'prefixIds'],
 };

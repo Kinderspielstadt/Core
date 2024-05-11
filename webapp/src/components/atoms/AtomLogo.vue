@@ -1,20 +1,8 @@
-<template>
-  <img
-    v-if="isDark"
-    src="../../assets/svg/logo_white.svg"
-    class="w-48"
-  />
-  <img
-    v-else
-    src="../../assets/svg/logo_black.svg"
-    class="w-48"
-  />
-</template>
-
 <script lang="ts" setup>
 import { isDark } from '../../utils/darkMode';
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<template>
+  <img v-if="isDark" src="../../assets/svg/logo_white.svg" class="w-48" />
+  <img v-else src="../../assets/svg/logo_black.svg" class="w-48" />
+</template>

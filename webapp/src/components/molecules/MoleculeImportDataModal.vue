@@ -1,33 +1,3 @@
-<template>
-  <AtomModal
-    :id="id"
-    ref="modal"
-    :title="title"
-  >
-    <div class="flex flex-col gap-2">
-      <AtomFileInput @change="file = ($event.target as HTMLInputElement)?.files?.[0]" />
-      <p>Datei für den Import der Stammdaten im CSV-Format auswählen.<br /><b>! Achtung !</b> Die Datei muss eine Kopfzeile besitzen.</p>
-    </div>
-    <template #action>
-      <label
-        class="btn gap-2"
-        :for="id"
-        @click="modal?.close()"
-      >
-        <XCircleIcon class="h-6 w-6" />
-        Abbrechen
-      </label>
-      <button
-        class="btn gap-2"
-        @click="handleSubmit()"
-      >
-        <CheckCircleIcon class="h-6 w-6" />
-        {{ actionLabel }}
-      </button>
-    </template>
-  </AtomModal>
-</template>
-
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/outline';
@@ -55,7 +25,7 @@ defineProps({
 const emit = defineEmits(['submit']);
 
 function handleSubmit() {
-  if(!file.value) {
+  if (!file.value) {
     return;
   }
   emit('submit', file.value);
@@ -68,6 +38,28 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<template>
+  <AtomModal :id="id" ref="modal" :title="title">
+    <div class="flex flex-col gap-2">
+      <AtomFileInput
+        @change="file = ($event.target as HTMLInputElement)?.files?.[0]"
+      />
+      <p>
+        Datei für den Import der Stammdaten im CSV-Format auswählen.<br /><b
+          >! Achtung !</b
+        >
+        Die Datei muss eine Kopfzeile besitzen.
+      </p>
+    </div>
+    <template #action>
+      <label class="btn gap-2" :for="id" @click="modal?.close()">
+        <XCircleIcon class="h-6 w-6" />
+        Abbrechen
+      </label>
+      <button class="btn gap-2" @click="handleSubmit()">
+        <CheckCircleIcon class="h-6 w-6" />
+        {{ actionLabel }}
+      </button>
+    </template>
+  </AtomModal>
+</template>

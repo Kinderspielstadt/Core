@@ -1,12 +1,3 @@
-<template>
-  <MoleculeNavigationDrawer
-    :drawer-id="drawerId"
-    :navigation-entries="navigationEntries"
-  >
-    <RouterView />
-  </MoleculeNavigationDrawer>
-</template>
-
 <script setup lang="ts">
 import { INavigationEntry } from './interfaces/navigation-entry.interface';
 import {
@@ -55,6 +46,13 @@ const navigationEntries: INavigationEntry[] = [
 ];
 </script>
 
-<style lang="scss" scoped>
+<template>
+  <MoleculeNavigationDrawer
+    :drawer-id="drawerId"
+    :navigation-entries="navigationEntries"
+  >
+    <RouterView />
+  </MoleculeNavigationDrawer>
+</template>
 
-</style>
+<style lang="scss" scoped></style>

@@ -1,37 +1,3 @@
-<template>
-  <AtomModal
-    :id="id"
-    ref="modal"
-    :title="title"
-    @close="handleClose"
-  >
-    <div class="flex place-items-center justify-between">
-      <AtomInput
-        v-model="accountNumber"
-        class="w-4/12"
-        @keyup.esc="modal?.close()"
-      />
-    </div>
-    <template #action>
-      <label
-        class="btn gap-2"
-        :for="id"
-        @click="modal?.close()"
-      >
-        <XCircleIcon class="h-6 w-6" />
-        Abbrechen
-      </label>
-      <button
-        class="btn gap-2"
-        @click="handleSubmit()"
-      >
-        <CheckCircleIcon class="h-6 w-6" />
-        Speichern
-      </button>
-    </template>
-  </AtomModal>
-</template>
-
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/vue/24/outline';
@@ -60,7 +26,7 @@ function handleClose() {
 }
 
 function handleSubmit() {
-  if(!accountNumber.value) {
+  if (!accountNumber.value) {
     return;
   }
   emit('submit', {
@@ -79,6 +45,24 @@ defineExpose({
 });
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<template>
+  <AtomModal :id="id" ref="modal" :title="title" @close="handleClose">
+    <div class="flex place-items-center justify-between">
+      <AtomInput
+        v-model="accountNumber"
+        class="w-4/12"
+        @keyup.esc="modal?.close()"
+      />
+    </div>
+    <template #action>
+      <label class="btn gap-2" :for="id" @click="modal?.close()">
+        <XCircleIcon class="h-6 w-6" />
+        Abbrechen
+      </label>
+      <button class="btn gap-2" @click="handleSubmit()">
+        <CheckCircleIcon class="h-6 w-6" />
+        Speichern
+      </button>
+    </template>
+  </AtomModal>
+</template>

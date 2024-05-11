@@ -2,6 +2,9 @@
 * This file was @generated using pocketbase-typegen
 */
 
+import type PocketBase from 'pocketbase'
+import type { RecordService } from 'pocketbase'
+
 export enum Collections {
 	Accounts = "accounts",
 	AccountsData = "accountsData",
@@ -38,35 +41,35 @@ export type AuthSystemFields<T = never> = {
 
 export type AccountsRecord = {
 	accountNumber?: string
-	picture?: string
-	firstName: string
-	lastName: string
 	color?: RecordIdString
+	firstName: string
 	lastCheckIn?: IsoDateString
+	lastName: string
 	personalData?: RecordIdString
+	picture?: string
 }
 
 export type AccountsDataRecord = {
 	birthday?: IsoDateString
+	city?: string
 	email?: string
 	firstNameParent?: string
-	lastNameParent?: string
-	street?: string
-	zipCode?: number
-	city?: string
-	phone?: string
 	intolerances?: string
-	vegetarian?: boolean
+	lastNameParent?: string
 	oneweek?: boolean
+	phone?: string
+	street?: string
+	vegetarian?: boolean
+	zipCode?: number
 }
 
 export type AccountsListRecord<Tbalance = unknown, Tname = unknown> = {
 	accountNumber?: string
-	picture?: string
-	name?: null | Tname
+	balance?: null | Tbalance
 	color: string
 	lastCheckIn?: IsoDateString
-	balance?: null | Tbalance
+	name?: null | Tname
+	picture?: string
 	vegetarian?: boolean
 }
 
@@ -91,8 +94,8 @@ export type SettingsRecord = {
 
 export type TransactionsRecord = {
 	account: RecordIdString
-	label: string
 	amount?: number
+	label: string
 }
 
 // Response types include system fields and match responses from the PocketBase API
@@ -124,4 +127,17 @@ export type CollectionResponses = {
 	polls: PollsResponse
 	settings: SettingsResponse
 	transactions: TransactionsResponse
+}
+
+// Type for usage with type asserted PocketBase instance
+// https://github.com/pocketbase/js-sdk#specify-typescript-definitions
+
+export type TypedPocketBase = PocketBase & {
+	collection(idOrName: 'accounts'): RecordService<AccountsResponse>
+	collection(idOrName: 'accountsData'): RecordService<AccountsDataResponse>
+	collection(idOrName: 'accountsList'): RecordService<AccountsListResponse>
+	collection(idOrName: 'colors'): RecordService<ColorsResponse>
+	collection(idOrName: 'polls'): RecordService<PollsResponse>
+	collection(idOrName: 'settings'): RecordService<SettingsResponse>
+	collection(idOrName: 'transactions'): RecordService<TransactionsResponse>
 }

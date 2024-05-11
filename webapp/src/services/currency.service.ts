@@ -6,7 +6,7 @@ export class CurrencyService {
     })} Öro`;
   }
   public static toSignedString(value: number): string {
-    return `${(value / 100) > 0 ? '+' : ''}${(value / 100).toLocaleString('de', {
+    return `${value / 100 > 0 ? '+' : ''}${(value / 100).toLocaleString('de', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     })} Öro`;

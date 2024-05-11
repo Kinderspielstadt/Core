@@ -1,12 +1,13 @@
 module.exports = {
-  content: [
-    './index.html',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-  ],
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/typography'), require('daisyui'), require('@tailwindcss/container-queries')],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui'),
+    require('@tailwindcss/container-queries'),
+  ],
   daisyui: {
     logs: false,
     themes: [

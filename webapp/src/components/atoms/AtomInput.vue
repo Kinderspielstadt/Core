@@ -1,15 +1,3 @@
-<template>
-  <input
-    ref="input"
-    :type="type"
-    :required="required"
-    :placeholder="placeholder"
-    :value="modelValue"
-    class="input input-bordered input-primary w-full"
-    @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value)"
-  />
-</template>
-
 <script lang="ts" setup>
 defineProps({
   type: {
@@ -24,22 +12,29 @@ defineProps({
     type: String,
     default: '',
   },
-  modelValue: {
-    type: String,
-    default: '',
-  },
 });
 
-defineEmits(['update:modelValue']);
+const model = defineModel<string | number>();
 </script>
 
-<style lang="scss" scoped>
+<template>
+  <input
+    ref="input"
+    v-model="model"
+    :type="type"
+    :required="required"
+    :placeholder="placeholder"
+    class="input input-bordered input-primary w-full"
+  />
+</template>
+
+<style scoped>
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 </style>

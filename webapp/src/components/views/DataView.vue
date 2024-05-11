@@ -1,70 +1,24 @@
-<template>
-  <MoleculeAuthDialog v-if="!isAuthenticated" />
-  <div
-    v-else
-    class="flex h-full flex-col p-6"
-  >
-    <AtomInput
-      v-model="searchQuery"
-      placeholder="Nach Vor-/Nachname oder Kontonummer suchen"
-      class="mb-4"
-    />
-    <MoleculeDataTable
-      v-if="accounts"
-      :table-headers="tableHeaders"
-      :data="accounts"
-      :colors="colors"
-      default-sort-key="name"
-      :camera-enabled="cameraEnabled"
-      @change-account-number="changeAccountNumberModal?.show($event);"
-      @open-contact-modal="contactInformationModal?.show($event);"
-      @update-color="updateColor"
-      @picture-click="updatePictureModal?.show($event);"
-    />
-    <MoleculeChanceAccountNumberModal
-      id="changeAccountNumber"
-      ref="changeAccountNumberModal"
-      title="Kontonummer ändern"
-      @submit="changeAccountNumber"
-    />
-  </div>
-  <MoleculeContactModal
-    id="contactInformation"
-    ref="contactInformationModal"
-  />
-  <MoleculeUpdatePictureModal
-    v-if="cameraEnabled"
-    id="updatePicture"
-    ref="updatePictureModal"
-  />
-  <button
-    class="btn btn-circle btn-primary fixed bottom-4 right-4 h-14 w-14"
-    @click="toggleCameraEnabled"
-  >
-    <VideoCameraIcon
-      v-if="cameraEnabled"
-      class="h-8 w-8"
-    />
-    <VideoCameraSlashIcon
-      v-else
-      class="h-8 w-8"
-    />
-  </button>
-</template>
-
 <script lang="ts" setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { useEventBus } from '@vueuse/core';
 import { UnsubscribeFunc } from 'pocketbase';
 import { AccountService } from '../../services/account.service';
-import { AccountsListResponse, ColorsResponse } from '../../types/pocketbase.types';
+import {
+  AccountsListResponse,
+  ColorsResponse,
+} from '../../types/pocketbase.types';
 import { AuthService } from '../../services/auth.service';
 import { BankService } from '../../services/bank.service';
 import { ColorService } from '../../services/color.service';
-import { VideoCameraIcon, VideoCameraSlashIcon } from '@heroicons/vue/24/outline';
+import {
+  VideoCameraIcon,
+  VideoCameraSlashIcon,
+} from '@heroicons/vue/24/outline';
 import AtomInput from '../atoms/AtomInput.vue';
 import MoleculeContactModal from '../molecules/MoleculeContactModal.vue';
-import MoleculeDataTable, { TableHeaderType } from '../molecules/MoleculeDataTable.vue';
+import MoleculeDataTable, {
+  TableHeaderType,
+} from '../molecules/MoleculeDataTable.vue';
 import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
 import MoleculeChanceAccountNumberModal from '../molecules/MoleculeChanceAccountNumberModal.vue';
 import MoleculeUpdatePictureModal from '../molecules/MoleculeUpdatePictureModal.vue';
@@ -72,9 +26,12 @@ import MoleculeUpdatePictureModal from '../molecules/MoleculeUpdatePictureModal.
 const isAuthenticated = ref(false);
 const accountsSubscription = ref<UnsubscribeFunc>();
 const transactionsSubscription = ref<UnsubscribeFunc>();
-const changeAccountNumberModal = ref<InstanceType<typeof MoleculeChanceAccountNumberModal>>();
-const contactInformationModal = ref<InstanceType<typeof MoleculeContactModal>>();
-const updatePictureModal = ref<InstanceType<typeof MoleculeUpdatePictureModal>>();
+const changeAccountNumberModal =
+  ref<InstanceType<typeof MoleculeChanceAccountNumberModal>>();
+const contactInformationModal =
+  ref<InstanceType<typeof MoleculeContactModal>>();
+const updatePictureModal =
+  ref<InstanceType<typeof MoleculeUpdatePictureModal>>();
 const colors = ref<ColorsResponse[]>([]);
 const cameraEnabled = ref(false);
 
@@ -134,7 +91,7 @@ const tableHeaders = [
   },
 ];
 
-function changeAccountNumber(account: {id: string, accountNumber: string}) {
+function changeAccountNumber(account: { id: string; accountNumber: string }) {
   AccountService.updateAccountNumber(account.id, account.accountNumber);
 }
 
@@ -142,9 +99,9 @@ function updateColor(id: string, colorId?: string) {
   AccountService.updateColor(id, colorId);
 }
 
-useEventBus<boolean>('isAuthenticated').on(state => {
+useEventBus<boolean>('isAuthenticated').on((state) => {
   isAuthenticated.value = state;
-  if(isAuthenticated.value) {
+  if (isAuthenticated.value) {
     getData();
   }
 });
@@ -156,22 +113,21 @@ async function getData() {
 
 function toggleCameraEnabled() {
   cameraEnabled.value = !cameraEnabled.value;
-  if(!cameraEnabled.value) {
+  if (!cameraEnabled.value) {
     updatePictureModal.value?.disableCamera();
   }
 }
 
-watch(
-  searchQuery,
-  (value) => {
-    search(value);
-  },
-);
+watch(searchQuery, (value) => {
+  search(value);
+});
 
 function search(value: string) {
-  if(initAccounts.value) {
-    accounts.value = initAccounts.value.filter((account) =>
-      account.accountNumber?.includes(value) || account.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()),
+  if (initAccounts.value) {
+    accounts.value = initAccounts.value.filter(
+      (account) =>
+        account.accountNumber?.includes(value) ||
+        account.name?.toLocaleLowerCase().includes(value.toLocaleLowerCase()),
     );
   }
 }
@@ -179,17 +135,20 @@ function search(value: string) {
 onMounted(async () => {
   isAuthenticated.value = AuthService.isAuthenticated();
   colors.value = await ColorService.getColors();
-  if(isAuthenticated.value) {
+  if (isAuthenticated.value) {
     getData();
   }
-  accountsSubscription.value = await AccountService.subscribeToAccountChanges(async () => {
-    await getData();
-    search(searchQuery.value);
-  });
-  transactionsSubscription.value = await BankService.subscribeToTransactionChanges(async () => {
-    await getData();
-    search(searchQuery.value);
-  });
+  accountsSubscription.value = await AccountService.subscribeToAccountChanges(
+    async () => {
+      await getData();
+      search(searchQuery.value);
+    },
+  );
+  transactionsSubscription.value =
+    await BankService.subscribeToTransactionChanges(async () => {
+      await getData();
+      search(searchQuery.value);
+    });
 });
 
 onUnmounted(() => {
@@ -198,5 +157,49 @@ onUnmounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-</style>
+<template>
+  <div>
+    <MoleculeAuthDialog v-if="!isAuthenticated" />
+    <div v-else class="flex h-full flex-col p-6">
+      <AtomInput
+        v-model="searchQuery"
+        placeholder="Nach Vor-/Nachname oder Kontonummer suchen"
+        class="mb-4"
+      />
+      <MoleculeDataTable
+        v-if="accounts"
+        :table-headers="tableHeaders"
+        :data="accounts"
+        :colors="colors"
+        default-sort-key="name"
+        :camera-enabled="cameraEnabled"
+        @change-account-number="changeAccountNumberModal?.show($event)"
+        @open-contact-modal="contactInformationModal?.show($event)"
+        @update-color="updateColor"
+        @picture-click="updatePictureModal?.show($event)"
+      />
+      <MoleculeChanceAccountNumberModal
+        id="changeAccountNumber"
+        ref="changeAccountNumberModal"
+        title="Kontonummer ändern"
+        @submit="changeAccountNumber"
+      />
+    </div>
+    <MoleculeContactModal
+      id="contactInformation"
+      ref="contactInformationModal"
+    />
+    <MoleculeUpdatePictureModal
+      v-if="cameraEnabled"
+      id="updatePicture"
+      ref="updatePictureModal"
+    />
+    <button
+      class="btn btn-circle btn-primary fixed bottom-4 right-4 h-14 w-14"
+      @click="toggleCameraEnabled"
+    >
+      <VideoCameraIcon v-if="cameraEnabled" class="h-8 w-8" />
+      <VideoCameraSlashIcon v-else class="h-8 w-8" />
+    </button>
+  </div>
+</template>

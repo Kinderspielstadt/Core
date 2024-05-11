@@ -1,0 +1,5 @@
+build
+coverage
+dist
+pnpm-lock.yaml
+pocketbase.types.ts
