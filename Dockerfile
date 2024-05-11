@@ -1,5 +1,5 @@
 ## Build
-FROM golang:1.20-buster as build
+FROM golang:1.22-bookworm as build
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ COPY server/*.go ./
 RUN CGO_ENABLED=1 go build -o /server
 
 ## Deploy
-FROM gcr.io/distroless/base-debian10
+FROM gcr.io/distroless/base-debian12
 
 WORKDIR /
 

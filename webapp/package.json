@@ -2,7 +2,7 @@
   "name": "kispi-core",
   "private": true,
   "author": "Simon Giesel",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "packageManager": "pnpm@9.1.0",
   "scripts": {
     "dev": "vite",
