@@ -15,7 +15,7 @@ onMounted(async () => {
     v-if="settings?.radioUrl"
     :src="settings?.radioUrl"
     frameborder="0"
-    class="size-full"
+    class="size-full min-h-full"
   />
   <span v-else>Fehler: Keine Radio URL festgelegt.</span>
 </template>

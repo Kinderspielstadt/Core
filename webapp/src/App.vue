@@ -9,6 +9,7 @@ import {
   BoltIcon,
 } from '@heroicons/vue/24/outline';
 import MoleculeNavigationDrawer from './components/molecules/MoleculeNavigationDrawer.vue';
+import AtomFooter from './components/atoms/AtomFooter.vue';
 
 const drawerId = 'default-drawer';
 const navigationEntries: INavigationEntry[] = [
@@ -52,6 +53,7 @@ const navigationEntries: INavigationEntry[] = [
     :navigation-entries="navigationEntries"
   >
     <RouterView />
+    <AtomFooter />
   </MoleculeNavigationDrawer>
 </template>
 

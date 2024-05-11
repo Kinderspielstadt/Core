@@ -50,9 +50,18 @@ steps:
       - corepack enable
       - pnpm lint
 
-  - name: 🏗️ Build Web App
+  - name: ✨ Generate Version
     depends_on:
       - 🔎 Lint Web App
+    image: *node_image
+    directory: webapp/
+    commands:
+      - corepack enable
+      - pnpm generate-version
+
+  - name: 🏗️ Build Web App
+    depends_on:
+      - ✨ Generate Version
     image: *node_image
     directory: webapp/
     commands:

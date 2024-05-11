@@ -141,7 +141,7 @@ onMounted(async () => {
 
 <template>
   <MoleculeAuthDialog v-if="!isAuthenticated" />
-  <div v-else class="@container">
+  <div v-else class="min-h-full @container">
     <div
       class="flex h-full flex-wrap justify-center gap-4 p-6 @[832px]:justify-normal"
     >

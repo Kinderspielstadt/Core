@@ -39,9 +39,7 @@ const emit = defineEmits<{
         class="group flex size-6 cursor-pointer place-items-center justify-center rounded-full border border-base-content transition-all hover:size-8"
         @click.stop="selectColor()"
       >
-        <XMarkIcon
-          class="size-5 transition-all group-hover:size-7"
-        />
+        <XMarkIcon class="size-5 transition-all group-hover:size-7" />
       </div>
     </div>
   </div>

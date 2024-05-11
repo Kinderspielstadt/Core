@@ -2,7 +2,7 @@
   "name": "kispi-core",
   "private": true,
   "author": "Simon Giesel",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "packageManager": "pnpm@9.1.0",
   "scripts": {
     "dev": "vite",
@@ -12,7 +12,8 @@
     "format:check": "prettier --check .",
     "preview": "vite preview",
     "typegen": "pocketbase-typegen --json ../server/pb_schema.json --out ./src/types/pocketbase.types.ts",
-    "optimize-svg": "svgo -f ./src/assets/svg/ --config=./src/assets/svg/svgo.config.js"
+    "optimize-svg": "svgo -f ./src/assets/svg/ --config=./src/assets/svg/svgo.config.js",
+    "generate-version": "node ./scripts/generate-version.js"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.3",

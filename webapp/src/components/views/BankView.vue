@@ -194,7 +194,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="min-h-full">
     <div
       v-if="account"
       class="hero-content flex-col gap-4 pt-0 text-center lg:p-6"
@@ -266,7 +266,7 @@ onUnmounted(() => {
         Auszahlen
       </button>
     </div>
-    <AtomHeroText v-else>
+    <AtomHeroText v-else class="h-full">
       Bitte Karte scannen...
       <div v-if="error" class="alert alert-error mt-6 shadow-lg">
         <XCircleIcon class="size-6" />
