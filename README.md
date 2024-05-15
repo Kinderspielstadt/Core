@@ -19,11 +19,7 @@ Also `Go` is required to run the built in server.
 
 ### 📦 Installing
 
-At first clone this repository to your local machine by using
-
-```
-git clone https://git.cliffbreak.de/Kispi/Core.git
-```
+At first clone this repository to your local machine.
 
 Change to the cloned repository
 
@@ -62,12 +58,6 @@ To install all required server packages run
 cd ../server && go mod download
 ```
 
-To generate unique VAPID keys run the following Go command copy this keys to the `.env` file
-
-```
-go run main.go generate-vapid-keys
-```
-
 To start the server run the following Go command
 
 ```
@@ -82,24 +72,25 @@ cd ../webapp && pnpm typegen
 ```
 
 ## 🧑‍💻 Configure Visual Studio Code
+
 If you haven't a instance of Visual Studio Code up and running download the latest version [here](https://code.visualstudio.com/download).  
 Install the recommended extensions by opening the Extensions-Tab (Ctrl+Shift+X).  
 Enter `@recommended` and install all extensions.  
 After that restart Visual Studio Code to apply all changes.
 
 ## 🎉 Contributing
+
 Please refer to our **[COMMIT_CONVENTION](COMMIT_CONVENTION.md)**
 
 ## 🏗️ Built With
 
-* [Node.js](https://nodejs.org/) - The JavaScript runtime used as the projects base
-* [PNPM](https://pnpm.io/) - Faster alternative to npm for managing dependencies
-* [Vue.js](https://vuejs.org/) - The Frontend Web Framework
-* [Vite](https://vitejs.dev/) - Used Frontend Tooling
-* [Go](https://go.dev/) - The Backend Programming Language
-* [Pocketbase](https://pocketbase.io/) - The Backend Framework
-
+- [Node.js](https://nodejs.org/) - The JavaScript runtime used as the projects base
+- [PNPM](https://pnpm.io/) - Faster alternative to npm for managing dependencies
+- [Vue.js](https://vuejs.org/) - The Frontend Web Framework
+- [Vite](https://vitejs.dev/) - Used Frontend Tooling
+- [Go](https://go.dev/) - The Backend Programming Language
+- [Pocketbase](https://pocketbase.io/) - The Backend Framework
 
 ## 🤵 Authors
 
-* **Simon Giesel** - *Project Lead & Initial work* - [Simon Giesel](https://git.cliffbreak.de/SimGie)
+- **Simon Giesel** - _Project Lead & Initial work_ - [Simon Giesel](https://github.com/Aragur)
