@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { PropType, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useEventBus } from '@vueuse/core';
 import { useRouter } from 'vue-router';
 import { INavigationEntry } from '../../interfaces/navigation-entry.interface';
@@ -19,16 +19,10 @@ const isAuthenticated = ref(false);
 const router = useRouter();
 const drawerCheckbox = ref();
 
-defineProps({
-  drawerId: {
-    type: String,
-    required: true,
-  },
-  navigationEntries: {
-    type: Array as PropType<INavigationEntry[]>,
-    required: true,
-  },
-});
+defineProps<{
+  drawerId: string;
+  navigationEntries: INavigationEntry[];
+}>();
 
 function getNavigationEntryClass(navigationEntry: INavigationEntry) {
   return {
@@ -129,5 +123,3 @@ router.afterEach(() => {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

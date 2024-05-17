@@ -8,16 +8,10 @@ const modal = ref<InstanceType<typeof AtomModal>>();
 const accountNumber = ref('');
 const accountId = ref('');
 
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  id: string;
+  title: string;
+}>();
 
 const emit = defineEmits(['submit']);
 

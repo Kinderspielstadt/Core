@@ -24,7 +24,6 @@ const model = defineModel<number>();
 
 function onKeyUp(event: KeyboardEvent) {
   error.value = false;
-  // eslint-disable-next-line vue/no-mutating-props
   const value = parseInt((event.target as HTMLInputElement).value);
 
   if (isNaN(value)) {

@@ -1,19 +1,17 @@
 <script lang="ts" setup>
-import { PropType } from 'vue';
 import { CurrencyService } from '../../services/currency.service';
 import { DateService } from '../../services/date.service';
 import { TransactionsResponse } from '../../types/pocketbase.types';
 
-defineProps({
-  transactions: {
-    type: Array as PropType<TransactionsResponse[]>,
-    required: true,
+withDefaults(
+  defineProps<{
+    transactions: TransactionsResponse[];
+    balance?: number;
+  }>(),
+  {
+    balance: 0,
   },
-  balance: {
-    type: Number,
-    default: 0,
-  },
-});
+);
 </script>
 
 <template>

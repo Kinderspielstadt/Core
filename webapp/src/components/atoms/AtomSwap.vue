@@ -1,20 +1,16 @@
 <script lang="ts" setup>
-import { FunctionalComponent, PropType } from 'vue';
+import { FunctionalComponent } from 'vue';
 
-defineProps({
-  onIcon: {
-    type: Function as PropType<FunctionalComponent>,
-    required: true,
+withDefaults(
+  defineProps<{
+    onIcon: FunctionalComponent;
+    offIcon: FunctionalComponent;
+    checked?: boolean;
+  }>(),
+  {
+    checked: false,
   },
-  offIcon: {
-    type: Function as PropType<FunctionalComponent>,
-    required: true,
-  },
-  checked: {
-    type: Boolean,
-    default: false,
-  },
-});
+);
 </script>
 
 <template>

@@ -7,20 +7,11 @@ import AtomFileInput from '../atoms/AtomFileInput.vue';
 const modal = ref<InstanceType<typeof AtomModal>>();
 const file = ref<File>();
 
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  actionLabel: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  id: string;
+  title: string;
+  actionLabel: string;
+}>();
 
 const emit = defineEmits(['submit']);
 

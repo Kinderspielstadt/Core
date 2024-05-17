@@ -1,16 +1,8 @@
 <script lang="ts" setup>
-import { PropType } from 'vue';
-
-defineProps({
-  placeholder: {
-    type: String,
-    required: true,
-  },
-  options: {
-    type: Array as PropType<string[]>,
-    required: true,
-  },
-});
+defineProps<{
+  placeholder: string;
+  options: string[];
+}>();
 
 const model = defineModel<string>();
 </script>

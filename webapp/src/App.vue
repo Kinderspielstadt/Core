@@ -56,5 +56,3 @@ const navigationEntries: INavigationEntry[] = [
     <AtomFooter />
   </MoleculeNavigationDrawer>
 </template>
-
-<style lang="scss" scoped></style>

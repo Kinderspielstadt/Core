@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-defineProps({
-  type: {
-    type: String,
-    default: 'text',
+withDefaults(
+  defineProps<{
+    type?: string;
+    required?: boolean;
+    placeholder?: string;
+  }>(),
+  {
+    type: 'text',
+    required: false,
+    placeholder: '',
   },
-  required: {
-    type: Boolean,
-    default: false,
-  },
-  placeholder: {
-    type: String,
-    default: '',
-  },
-});
+);
 
 const model = defineModel<string | number>();
 </script>

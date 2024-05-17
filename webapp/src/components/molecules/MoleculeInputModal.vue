@@ -7,24 +7,12 @@ import AtomModal from '../atoms/AtomModal.vue';
 const modal = ref<InstanceType<typeof AtomModal>>();
 const amount = ref();
 
-defineProps({
-  id: {
-    type: String,
-    required: true,
-  },
-  title: {
-    type: String,
-    required: true,
-  },
-  actionLabel: {
-    type: String,
-    required: true,
-  },
-  inputLabel: {
-    type: String,
-    required: true,
-  },
-});
+defineProps<{
+  id: string;
+  title: string;
+  actionLabel: string;
+  inputLabel: string;
+}>();
 
 const emit = defineEmits(['submit']);
 
