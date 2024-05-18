@@ -158,7 +158,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="min-h-full">
     <MoleculeAuthDialog v-if="!isAuthenticated" />
     <div v-else class="flex h-full flex-col p-6">
       <AtomInput

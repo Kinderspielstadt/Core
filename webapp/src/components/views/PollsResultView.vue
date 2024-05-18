@@ -41,7 +41,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="flex w-full flex-col items-center gap-4 p-8">
+  <div class="flex min-h-full w-full flex-col items-center gap-4 p-8">
     <h1 class="text-4xl">Abstimmungsergebnisse</h1>
     <div v-if="results" class="stats">
       <div class="stat place-items-center">

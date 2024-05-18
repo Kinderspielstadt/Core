@@ -1,9 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
 import { ColorsResponse } from '../../types/pocketbase.types';
 import { XMarkIcon } from '@heroicons/vue/24/outline';
-
-const isSelecting = ref(false);
 
 defineProps<{
   selectedColor?: string;
@@ -12,7 +9,6 @@ defineProps<{
 
 function selectColor(id?: string) {
   emit('selectColor', id);
-  isSelecting.value = false;
 }
 
 const emit = defineEmits<{
@@ -21,13 +17,14 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div
-    class="flex size-10 cursor-pointer place-items-center justify-center rounded-full border border-base-content"
+  <a
+    class="group flex size-10 cursor-pointer place-items-center justify-center rounded-full border border-base-content"
+    href="#"
     :style="`background: ${selectedColor}`"
-    @click="isSelecting = !isSelecting"
+    @click.prevent
   >
     <template v-if="!selectedColor"><XMarkIcon class="size-7" /></template>
-    <div v-if="isSelecting" class="absolute mt-20 flex items-center gap-2">
+    <div class="absolute mt-20 hidden items-center gap-2 group-focus:flex">
       <div
         v-for="color in colors"
         :key="color.id"
@@ -42,5 +39,5 @@ const emit = defineEmits<{
         <XMarkIcon class="size-5 transition-all group-hover:size-7" />
       </div>
     </div>
-  </div>
+  </a>
 </template>
