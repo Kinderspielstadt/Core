@@ -155,7 +155,7 @@ onMounted(async () => {
             <AtomInput v-model="radioUrl" />
           </div>
           <button
-            class="btn btn-primary mt-auto w-1/2 self-end"
+            class="btn btn-accent mt-auto w-1/2 self-end"
             @click="saveSettings()"
           >
             Speichern
@@ -180,15 +180,15 @@ onMounted(async () => {
           <MagnifyingGlassIcon class="size-6" />Verwaltung
         </template>
         <div class="mt-4 flex h-full flex-col gap-4">
-          <RouterLink class="btn" :to="{ name: 'data' }">
+          <RouterLink class="btn btn-primary" :to="{ name: 'data' }">
             <UsersIcon class="size-5" />
             Stammdaten-Übersicht
           </RouterLink>
-          <RouterLink class="btn" :to="{ name: 'pollsResult' }">
+          <RouterLink class="btn btn-primary" :to="{ name: 'pollsResult' }">
             <TrophyIcon class="size-5" />
             Abstimmungsergebnisse
           </RouterLink>
-          <RouterLink class="btn" :to="{ name: 'admin' }">
+          <RouterLink class="btn btn-primary" :to="{ name: 'admin' }">
             <StarIcon class="size-5" />
             Admin Oberfläche
           </RouterLink>
@@ -208,11 +208,11 @@ onMounted(async () => {
             action-label="Importieren"
             @submit="importAccounts"
           />
-          <button class="btn" @click="importAccountsModal?.show()">
+          <button class="btn btn-primary" @click="importAccountsModal?.show()">
             <TableCellsIcon class="size-5" />
             Stammdaten importieren
           </button>
-          <button class="btn" @click="genrateCardCSV">
+          <button class="btn btn-primary" @click="genrateCardCSV">
             <ArrowDownTrayIcon class="size-5" />
             Karten CSV generieren
           </button>

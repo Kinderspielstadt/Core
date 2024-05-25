@@ -12,9 +12,6 @@ import { BankService, TransactionType } from '../../services/bank.service';
 import { CurrencyService } from '../../services/currency.service';
 import { FileService } from '../../services/file.service';
 import {
-  CurrencyDollarIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
   XCircleIcon,
   CreditCardIcon,
   BanknotesIcon,
@@ -201,9 +198,11 @@ onUnmounted(() => {
     >
       <div class="flex items-center gap-8">
         <img
+          v-if="account.picture"
           :src="FileService.getAvatar(account.id, account.picture)"
-          class="size-64 rounded-lg"
+          class="skeleton size-64 rounded-lg bg-base-200"
         />
+        <div v-else class="skeleton size-64 rounded-lg bg-base-200"></div>
         <div class="flex flex-col items-start gap-4">
           <h3 class="text-left text-5xl font-bold">
             {{ `${account.firstName} ${account.lastName}` }}
@@ -237,8 +236,7 @@ onUnmounted(() => {
         input-label="Einzuzahlender Betrag"
         @submit="handleDeposit"
       />
-      <button class="btn gap-2" @click="() => depositModal?.show()">
-        <ChevronUpIcon class="size-6 text-success" />
+      <button class="btn btn-success" @click="() => depositModal?.show()">
         Einzahlen
       </button>
       <MoleculeInputModal
@@ -249,8 +247,7 @@ onUnmounted(() => {
         input-label="Gehalt Betrag"
         @submit="handleSalary"
       />
-      <button class="btn gap-2" @click="() => salaryModal?.show()">
-        <CurrencyDollarIcon class="size-6 text-warning" />
+      <button class="btn btn-warning" @click="() => salaryModal?.show()">
         Gehalt
       </button>
       <MoleculeInputModal
@@ -261,8 +258,7 @@ onUnmounted(() => {
         input-label="Auszuzahlender Betrag"
         @submit="handleWithdraw"
       />
-      <button class="btn gap-2" @click="() => withdrawModal?.show()">
-        <ChevronDownIcon class="size-6 text-error" />
+      <button class="btn btn-error" @click="() => withdrawModal?.show()">
         Auszahlen
       </button>
     </div>

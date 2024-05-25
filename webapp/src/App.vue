@@ -10,6 +10,7 @@ import {
 } from '@heroicons/vue/24/outline';
 import MoleculeNavigationDrawer from './components/molecules/MoleculeNavigationDrawer.vue';
 import AtomFooter from './components/atoms/AtomFooter.vue';
+import { useRoute } from 'vue-router';
 
 const drawerId = 'default-drawer';
 const navigationEntries: INavigationEntry[] = [
@@ -45,6 +46,7 @@ const navigationEntries: INavigationEntry[] = [
     to: '/settings',
   },
 ];
+const route = useRoute();
 </script>
 
 <template>
@@ -53,6 +55,6 @@ const navigationEntries: INavigationEntry[] = [
     :navigation-entries="navigationEntries"
   >
     <RouterView />
-    <AtomFooter />
+    <AtomFooter v-if="!['admin', 'bank'].includes(route.name as string)" />
   </MoleculeNavigationDrawer>
 </template>
