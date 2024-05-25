@@ -1,7 +1,7 @@
 <h1 align="center">🔥 Core - Kinderspielstadt Öhringen 🔥</h1>
 <h3 align="center">Personal data administration, user check in and a banking system</h1>
 <p align="center">
-<img height="600px" src=".docs/screenshot.png" alt="screenshot"/>
+<img max-height="600px" src=".docs/screenshot.png" alt="Screenshot from the banking screen of the software."/>
 </p>
 
 This is our repository containing all required resources to run the "Core" WebApp from the "Kinderspielstadt Öhringen".  
