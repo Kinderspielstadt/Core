@@ -31,7 +31,6 @@ const props = defineProps<{
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any[];
   colors?: ColorsResponse[];
-  cameraEnabled?: boolean;
   defaultSortKey?: string;
 }>();
 
@@ -159,9 +158,7 @@ export enum TableHeaderType {
             </span>
             <span
               v-else-if="header.type === TableHeaderType.PICTURE"
-              :class="{
-                'cursor-pointer': cameraEnabled,
-              }"
+              class="cursor-pointer"
               @click="$emit('pictureClick', entry.id)"
             >
               <img

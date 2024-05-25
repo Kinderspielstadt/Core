@@ -202,7 +202,7 @@ onUnmounted(() => {
           :src="FileService.getAvatar(account.id, account.picture)"
           class="skeleton size-64 rounded-lg bg-base-200"
         />
-        <div v-else class="skeleton size-64 rounded-lg bg-base-200"></div>
+        <div v-else class="skeleton size-64 rounded-lg bg-base-200" />
         <div class="flex flex-col items-start gap-4">
           <h3 class="text-left text-5xl font-bold">
             {{ `${account.firstName} ${account.lastName}` }}

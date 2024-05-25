@@ -21,6 +21,9 @@ export class AccountService {
   ): Promise<AccountsResponse> {
     return COLLECTION.getFirstListItem(`accountNumber = "${accountNumber}"`);
   }
+  public static async getAccountById(id: string): Promise<AccountsResponse> {
+    return COLLECTION.getOne(id);
+  }
   public static async checkIn(
     accountNumber: string,
   ): Promise<AccountsResponse> {

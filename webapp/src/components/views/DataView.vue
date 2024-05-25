@@ -22,6 +22,7 @@ import MoleculeDataTable, {
 import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
 import MoleculeChanceAccountNumberModal from '../molecules/MoleculeChanceAccountNumberModal.vue';
 import MoleculeUpdatePictureModal from '../molecules/MoleculeUpdatePictureModal.vue';
+import MoleculePicturePreviewModal from '../molecules/MoleculePicturePreviewModal.vue';
 
 const isAuthenticated = ref(false);
 const accountsSubscription = ref<UnsubscribeFunc>();
@@ -32,9 +33,10 @@ const contactInformationModal =
   ref<InstanceType<typeof MoleculeContactModal>>();
 const updatePictureModal =
   ref<InstanceType<typeof MoleculeUpdatePictureModal>>();
+const picturePreviewModal =
+  ref<InstanceType<typeof MoleculePicturePreviewModal>>();
 const colors = ref<ColorsResponse[]>([]);
 const cameraEnabled = ref(false);
-
 const accounts = ref<AccountsListResponse<number, string>[]>([]);
 const initAccounts = ref<AccountsListResponse<number, string>[]>([]);
 const searchQuery = ref('');
@@ -176,7 +178,11 @@ onUnmounted(() => {
         @change-account-number="changeAccountNumberModal?.show($event)"
         @open-contact-modal="contactInformationModal?.show($event)"
         @update-color="updateColor"
-        @picture-click="updatePictureModal?.show($event)"
+        @picture-click="
+          cameraEnabled
+            ? updatePictureModal?.show($event)
+            : picturePreviewModal?.show($event)
+        "
       />
       <MoleculeChanceAccountNumberModal
         id="changeAccountNumber"
@@ -193,6 +199,11 @@ onUnmounted(() => {
       v-if="cameraEnabled"
       id="updatePicture"
       ref="updatePictureModal"
+    />
+    <MoleculePicturePreviewModal
+      v-else
+      id="previewPicture"
+      ref="picturePreviewModal"
     />
     <button
       class="btn btn-circle btn-primary fixed bottom-4 right-4 size-14"

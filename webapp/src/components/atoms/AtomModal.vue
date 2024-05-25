@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { onMounted } from 'vue';
+import { onMounted, useSlots } from 'vue';
+
+const slots = useSlots();
 
 const props = withDefaults(
   defineProps<{
@@ -71,7 +73,7 @@ defineExpose({
           {{ title }}
         </h3>
         <p class="py-4"><slot /></p>
-        <div class="modal-action">
+        <div v-if="slots['action']" class="modal-action">
           <slot name="action" />
         </div>
       </form>
