@@ -11,6 +11,7 @@ import { AuthService } from '../../services/auth.service';
 import { BankService } from '../../services/bank.service';
 import { ColorService } from '../../services/color.service';
 import {
+  FunnelIcon,
   VideoCameraIcon,
   VideoCameraSlashIcon,
 } from '@heroicons/vue/24/outline';
@@ -23,6 +24,7 @@ import MoleculeAuthDialog from '../molecules/MoleculeAuthDialog.vue';
 import MoleculeChanceAccountNumberModal from '../molecules/MoleculeChanceAccountNumberModal.vue';
 import MoleculeUpdatePictureModal from '../molecules/MoleculeUpdatePictureModal.vue';
 import MoleculePicturePreviewModal from '../molecules/MoleculePicturePreviewModal.vue';
+import AtomCheckbox from '../atoms/AtomCheckbox.vue';
 
 const isAuthenticated = ref(false);
 const accountsSubscription = ref<UnsubscribeFunc>();
@@ -40,58 +42,68 @@ const cameraEnabled = ref(false);
 const accounts = ref<AccountsListResponse<number, string>[]>([]);
 const initAccounts = ref<AccountsListResponse<number, string>[]>([]);
 const searchQuery = ref('');
-const tableHeaders = [
+const tableHeaders = ref([
   {
     title: 'Knr.',
     key: 'accountNumber',
     type: TableHeaderType.STRING,
+    selected: true,
   },
   {
     title: 'Bild',
     key: 'picture',
     type: TableHeaderType.PICTURE,
+    selected: true,
   },
   {
     title: 'Name',
     key: 'name',
     type: TableHeaderType.STRING,
+    selected: true,
   },
   {
     title: 'Farbe',
     key: 'color',
     type: TableHeaderType.COLOR,
+    selected: true,
   },
   {
     title: 'Essen',
     key: 'vegetarian',
     type: TableHeaderType.VEGETARIAN,
+    selected: true,
   },
   {
     title: 'Letzter Check-In',
     key: 'lastCheckIn',
     type: TableHeaderType.DATETIME,
+    selected: true,
   },
   {
     title: 'Kontostand',
     key: 'balance',
     type: TableHeaderType.CURRENCY,
+    selected: true,
   },
   {
     title: 'Trans.',
     key: '',
     type: TableHeaderType.BUTTON_ACCOUNT,
+    selected: true,
   },
   {
     title: 'Daten',
     key: '',
     type: TableHeaderType.BUTTON_CONTACT,
+    selected: true,
   },
   {
     title: 'Änd.',
     key: '',
     type: TableHeaderType.BUTTON_CHANGE_ACCOUNT_NUMBER,
+    selected: true,
   },
-];
+]);
 
 function changeAccountNumber(account: { id: string; accountNumber: string }) {
   AccountService.updateAccountNumber(account.id, account.accountNumber);
@@ -163,14 +175,28 @@ onUnmounted(() => {
   <div class="min-h-full">
     <MoleculeAuthDialog v-if="!isAuthenticated" />
     <div v-else class="flex h-full flex-col p-6">
-      <AtomInput
-        v-model="searchQuery"
-        placeholder="Nach Vor-/Nachname oder Kontonummer suchen"
-        class="mb-4"
-      />
+      <div class="join mb-4">
+        <AtomInput
+          v-model="searchQuery"
+          placeholder="Nach Name oder Kontonummer suchen"
+          class="join-item"
+        />
+        <details class="dropdown dropdown-end dropdown-bottom">
+          <summary class="btn btn-outline btn-primary rounded-l-none">
+            <FunnelIcon class="size-6" />
+          </summary>
+          <ul
+            class="menu dropdown-content z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
+          >
+            <li v-for="header in tableHeaders" :key="header.key">
+              <AtomCheckbox v-model="header.selected" :label="header.title" />
+            </li>
+          </ul>
+        </details>
+      </div>
       <MoleculeDataTable
         v-if="accounts"
-        :table-headers="tableHeaders"
+        :table-headers="tableHeaders.filter((header) => header.selected)"
         :data="accounts"
         :colors="colors"
         default-sort-key="name"
