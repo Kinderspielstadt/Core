@@ -113,7 +113,7 @@ export enum TableHeaderType {
   <div class="h-full overflow-x-auto rounded-lg">
     <table class="table table-zebra table-pin-rows mb-6">
       <thead class="uppercase">
-        <tr>
+        <tr class="z-0">
           <th
             v-for="header in tableHeaders"
             :key="header.key"
